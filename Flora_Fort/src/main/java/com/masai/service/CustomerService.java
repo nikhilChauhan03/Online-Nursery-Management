@@ -1,5 +1,6 @@
 package com.masai.service;
 
+<<<<<<< HEAD
 
 import com.masai.DTO.LoginDTO;
 import com.masai.DTO.LogoutDTO;
@@ -28,4 +29,8 @@ public interface CustomerService {
 	public Boolean validateCustomer(String user) throws CustomerException;
 	
 	
+=======
+public interface CustomerService {
+
+>>>>>>> 88c459ec88335a4cf198f16a412c1027339468a7
 }

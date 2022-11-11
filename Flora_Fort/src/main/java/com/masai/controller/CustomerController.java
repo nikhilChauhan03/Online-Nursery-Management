@@ -1,5 +1,6 @@
 package com.masai.controller;
 
+<<<<<<< HEAD
 
 import javax.validation.Valid;
 
@@ -59,4 +60,8 @@ public class CustomerController {
 	{
 		return new ResponseEntity<LogoutDTO>(customerService.deleteCustomer(userId),HttpStatus.ACCEPTED);
 	}
+=======
+public class CustomerController {
+
+>>>>>>> 88c459ec88335a4cf198f16a412c1027339468a7
 }
