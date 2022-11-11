@@ -1,6 +1,5 @@
 package com.masai.model;
 
-<<<<<<< HEAD
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -64,8 +63,4 @@ public class Customer {
 	
 	
 	
-=======
-public class Customer {
-
->>>>>>> 88c459ec88335a4cf198f16a412c1027339468a7
 }

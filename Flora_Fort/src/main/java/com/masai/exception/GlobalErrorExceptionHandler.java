@@ -10,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 
 
@@ -66,6 +67,52 @@ public class GlobalErrorExceptionHandler {
 		return new ResponseEntity<MyErrorDetails>(md,HttpStatus.BAD_REQUEST);
 		
 	}
+	
+	
+	@ExceptionHandler(PlantException.class)
+	public ResponseEntity<MyErrorDetails>plantExceptionHandler(PlantException ce, WebRequest req){
+		
+		MyErrorDetails err=new MyErrorDetails(LocalDateTime.now(), ce.getMessage(), req.getDescription(false));
+		return new ResponseEntity<MyErrorDetails>(err,HttpStatus.BAD_REQUEST);
+		
+	}
+	
+	
+	@ExceptionHandler(PlanterException.class)
+	public ResponseEntity<MyErrorDetails> plantExceptionHandler(PlanterException se,WebRequest req){
+		
+		MyErrorDetails err = new MyErrorDetails(LocalDateTime.now(),se.getMessage(),req.getDescription(false));
+		
+		return new ResponseEntity<MyErrorDetails>(err,HttpStatus.BAD_REQUEST);
+	}
+	
+	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<MyErrorDetails> MANVExceptionHandler(MethodArgumentNotValidException me) {
+		
+		MyErrorDetails err = new MyErrorDetails(LocalDateTime.now(),"Validation Error",me.getBindingResult().getFieldError().getDefaultMessage());
+		
+		
+		
+		return new ResponseEntity<MyErrorDetails>(err, HttpStatus.BAD_REQUEST);
+	}
+	@ExceptionHandler(NoHandlerFoundException.class)
+	public ResponseEntity<MyErrorDetails> notFoundExceptionHandler(NoHandlerFoundException nfe, WebRequest req ){
+		
+		MyErrorDetails err = new MyErrorDetails(LocalDateTime.now(),nfe.getMessage(),req.getDescription(false));
+		
+		
+		return new ResponseEntity<MyErrorDetails>(err, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(Exception.class) 
+	public ResponseEntity<MyErrorDetails> otherExceptionHandler(Exception e, WebRequest req) {
+		
+		MyErrorDetails err = new MyErrorDetails(LocalDateTime.now(),e.getMessage(),req.getDescription(false));
+		
+		return new ResponseEntity<MyErrorDetails>(err, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
 	
 	
 //	@ExceptionHandler(SqlExceptionHelper.class)

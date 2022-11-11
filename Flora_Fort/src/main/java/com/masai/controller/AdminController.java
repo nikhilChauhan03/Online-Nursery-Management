@@ -17,13 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.DTO.LoginDTO;
 import com.masai.DTO.LogoutDTO;
+
 import com.masai.exception.AdminException;
 import com.masai.exception.CustomerException;
+import com.masai.exception.PlantException;
 import com.masai.model.Admin;
 import com.masai.model.CurrentUserSession;
 import com.masai.model.Customer;
+import com.masai.model.Plant;
 import com.masai.repositry.AdminRepositry;
 import com.masai.service.AdminService;
+import com.masai.service.PlantService;
 
 @RestController
 public class AdminController {
@@ -71,6 +75,41 @@ public class AdminController {
 	public ResponseEntity<Customer> getCustomerByIdHandler(@PathVariable Integer customerId, @PathVariable String user) throws AdminException, CustomerException
 	{
 		return new ResponseEntity<Customer>(adminService.getCustomerById(customerId,user),HttpStatus.ACCEPTED);
+	}
+	
+	
+	
+//=================================================	SUBOJIT Plant ======================================
+	
+	
+	@Autowired
+	private PlantService pService;
+	
+	
+	@PostMapping("/plants/{user}")
+	public ResponseEntity<Plant> registerPlantHandler(@PathVariable("user") @RequestBody Plant plant, String user) throws PlantException, AdminException{
+		
+		Plant savedPlant=pService.registerPlant(plant,user);
+		return new ResponseEntity<Plant>(savedPlant,HttpStatus.CREATED);
+		
+	}
+	
+	@PutMapping("/plants/{user}")
+	public ResponseEntity<Plant>updatePlantsHandler(@PathVariable("user") @RequestBody Plant plant, String user)throws PlantException, AdminException{
+		
+		Plant updated=pService.updatePlantDetails(plant,user);
+		
+		return new ResponseEntity<Plant>(updated,HttpStatus.ACCEPTED);
+		
+		
+	}
+	@DeleteMapping("/plants/{id}/{user}")
+	public ResponseEntity<Plant>deletePlantByIdHandler(@PathVariable("id") Integer id, @PathVariable("user")String user) throws PlantException, AdminException{
+		
+		Plant deleted=pService.deletePlantById(id,user);
+		return new ResponseEntity<Plant>(deleted,HttpStatus.OK);
+		
+		
 	}
 	
 	

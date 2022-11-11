@@ -1,6 +1,5 @@
 package com.masai.DTO;
 
-<<<<<<< HEAD
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -28,8 +27,4 @@ public class LoginDTO {
 	@NotBlank(message = "typeOfUser should not blank")
 	private String typeOfUser;
 	
-=======
-public class LoginDTO {
-
->>>>>>> 88c459ec88335a4cf198f16a412c1027339468a7
 }
