@@ -1,6 +1,6 @@
 package com.masai.model;
 
-import java.time.LocalDate;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -26,13 +26,7 @@ public class Orders {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer bookingOrderId;
 	
-	@NotNull(message = "orderDate should not be null")
-	@NotBlank(message = "orderDate should not be blank")
-	private LocalDate orderDate;
-	
-	@NotNull(message = "transactionMode should not be null")
-	@NotBlank(message = "transactionMode should not be blank")
-	private String transactionMode;
+	private String orderTransactionMode;
 	
 	private Integer quantity;
 	
@@ -41,6 +35,10 @@ public class Orders {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Planter planters;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Customer customer;
 	
 	
 	

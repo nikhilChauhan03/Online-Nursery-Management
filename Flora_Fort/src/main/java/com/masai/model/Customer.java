@@ -20,6 +20,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.ManyToAny;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -59,6 +60,9 @@ public class Customer {
 	@NotNull(message = "address should not be null")
 	@Embedded
 	private Address userAddress;
+	
+	@OneToMany(cascade = CascadeType.ALL)                                   
+	private List<Orders> orders = new ArrayList<>();
 
 	public Customer(String customerName, String customerEmail, String userName, String userPassword,
 			Address userAddress) {

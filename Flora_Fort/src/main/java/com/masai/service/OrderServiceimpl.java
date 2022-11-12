@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import com.masai.exception.AdminException;
 import com.masai.exception.CustomerException;
 import com.masai.exception.OrderException;
+import com.masai.model.Customer;
 import com.masai.model.Orders;
 import com.masai.model.Planter;
+import com.masai.repositry.CustomerRepositry;
 import com.masai.repositry.OrderDao;
 import com.masai.repositry.PlanterRepo;
 
@@ -24,14 +26,16 @@ public class OrderServiceimpl implements OrderService {
 	CustomerService customerService;
 	
 	@Autowired
+	CustomerRepositry customerRepositry;
+	
+	@Autowired
 	AdminService adminService;
 	
 	@Autowired
 	PlanterRepo plnaterRepo;
 	
-
 	@Override
-	public Orders addOrder(Orders order,Integer planterId, String user) throws OrderException, CustomerException {
+	public Orders addOrder(Orders order,Integer planterId,Integer customerId, String user) throws OrderException, CustomerException {
 		
 		if(!customerService.validateCustomer(user))throw new CustomerException("user is not valid or not logged in");
 		
@@ -39,12 +43,20 @@ public class OrderServiceimpl implements OrderService {
 		
 		Planter planter = plnaterRepo.findById(planterId)
 		.orElseThrow(() -> new OrderException("Invalid planter Id"));
+
+		Customer customer = customerRepositry.findById(customerId)
+							.orElseThrow(() -> new CustomerException("Invalid customer Id"));
+		
+		customer.getOrders().add(order);
+		
+		order.setCustomer(customer);
 		
 		order.setPlanters(planter);
 		
 		planter.getOrders().add(order);
 		
 		return orderdao.save(order);
+		
 
 	}
 
@@ -74,8 +86,8 @@ public class OrderServiceimpl implements OrderService {
 	}
 
 	@Override
-	public Orders viewOrder(int BookingOrderId,String user) throws OrderException, CustomerException {
-		if(!customerService.validateCustomer(user))throw new CustomerException("user is not valid or not logged in");
+	public Orders viewOrder(int BookingOrderId,String user) throws OrderException, CustomerException, AdminException {
+		if(!(customerService.validateCustomer(user) || adminService.validateAdmin(user)))throw new CustomerException("user is not valid or not logged in");
 		Optional<Orders> optional = orderdao.findById(BookingOrderId);
 		if(optional.isPresent()) {
 		Orders order = optional.get();
@@ -87,7 +99,7 @@ public class OrderServiceimpl implements OrderService {
 
 	@Override
 	public List<Orders> viewAllOrder(String user) throws OrderException, CustomerException, AdminException {
-		if(!customerService.validateCustomer(user) || !adminService.validateAdmin(user))throw new CustomerException("user is not valid or not logged in");
+		if(!(customerService.validateCustomer(user) || adminService.validateAdmin(user)))throw new CustomerException("user is not valid or not logged in");
 		List<Orders> orders = orderdao.findAll();
 		if(orders.isEmpty()) throw new OrderException("No order is registered in database");
 		return orders;

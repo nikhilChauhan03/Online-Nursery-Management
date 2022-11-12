@@ -1,8 +1,6 @@
 package com.masai.controller;
 
 
-import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -23,10 +21,8 @@ import com.masai.DTO.LogoutDTO;
 
 import com.masai.exception.CustomerException;
 import com.masai.exception.PlantException;
-import com.masai.model.CurrentUserSession;
 import com.masai.model.Customer;
 import com.masai.model.Plant;
-import com.masai.repositry.PlantRepo;
 import com.masai.service.CustomerService;
 import com.masai.service.PlantService;
 
@@ -71,30 +67,5 @@ public class CustomerController {
 	{
 		return new ResponseEntity<LogoutDTO>(customerService.deleteCustomer(userId),HttpStatus.ACCEPTED);
 	}
-	
-	
-	
-//	=================================SUBOJIT Plant=================================
-	
-	@Autowired
-	private PlantService pService;
-	@GetMapping("/plants/{id}/{user}")
-	public ResponseEntity<Plant>getPlantByIdHandler(@PathVariable("id") Integer id, @PathVariable("user") String user)throws PlantException,CustomerException{
-		
-		Plant plant=pService.getPlantById(id,user);
-		return new ResponseEntity<Plant>(plant,HttpStatus.OK);
-			
-		
-		
-	}
-	@GetMapping("/getplants/{cname}/{user}")
-	public ResponseEntity<Plant>getPlantByCommonNameHandler(@PathVariable("cname") String cname, @PathVariable("user")String user) throws PlantException, CustomerException{
-		
-		Plant plants=pService.getPlantByCommonName(cname,user);
-		
-		return new ResponseEntity<Plant>(plants,HttpStatus.OK);
-		
-	}
-	
 	
 }

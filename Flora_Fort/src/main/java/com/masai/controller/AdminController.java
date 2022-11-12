@@ -81,39 +81,5 @@ public class AdminController {
 		return new ResponseEntity<Customer>(adminService.getCustomerById(customerId,user),HttpStatus.ACCEPTED);
 	}
 	
-	
-	
-//=================================================	SUBOJIT Plant ======================================
-	
-	
-	@PostMapping("/plants/{user}")
-	public ResponseEntity<Plant> registerPlantHandler(@RequestBody Plant plant, @PathVariable String user) throws PlantException, AdminException{
 		
-		Plant savedPlant=pService.registerPlant(plant,user);
-		return new ResponseEntity<Plant>(savedPlant,HttpStatus.CREATED);
-		
-	}
-	
-	@PutMapping("/plants/{user}")
-	public ResponseEntity<Plant>updatePlantsHandler(@PathVariable("user") @RequestBody Plant plant, String user)throws PlantException, AdminException{
-		
-		Plant updated=pService.updatePlantDetails(plant,user);
-		
-		return new ResponseEntity<Plant>(updated,HttpStatus.ACCEPTED);
-		
-		
-	}
-	@DeleteMapping("/plants/{id}/{user}")
-	public ResponseEntity<Plant>deletePlantByIdHandler(@PathVariable("id") Integer id, @PathVariable("user")String user) throws PlantException, AdminException{
-		
-		Plant deleted=pService.deletePlantById(id,user);
-		return new ResponseEntity<Plant>(deleted,HttpStatus.OK);
-		
-		
-	}
-	
-	
-	
-
-	
 }

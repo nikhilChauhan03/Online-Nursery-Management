@@ -15,58 +15,64 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.masai.exception.AdminException;
+import com.masai.exception.CustomerException;
 import com.masai.exception.PlanterException;
 import com.masai.model.Planter;
 import com.masai.service.PlanterService;
 
-@RestController
-public class PlanterController {
+	@RestController
+	public class PlanterController {
 	
-	@Autowired
-	private PlanterService planterService;
+		@Autowired
+		private PlanterService planterService;
 	
-	
-		@GetMapping("/planters/{id}")               
-		public ResponseEntity<Planter> viewPlanterHandler(@Valid @PathVariable("id") int planterId) throws PlanterException {
-			
-			Planter obtainedPlanter = planterService.viewPlanter(planterId);
-					
-			return new ResponseEntity<Planter>(obtainedPlanter, HttpStatus.OK);
-		}
-		
-		
-		@GetMapping("/plnatershape/{shape}")              
-		public ResponseEntity<Planter> viewPlanterByShape(@Valid @PathVariable("shape") String planterShape) throws PlanterException {
-			
-			Planter planter = planterService.viewPlanter(planterShape);
-					
-			return new ResponseEntity<Planter>(planter, HttpStatus.OK);
-		}
-		
-		
-		@GetMapping("/planters")              
-		public ResponseEntity<List<Planter>> findAllPlanters() throws PlanterException {
-			
-			List<Planter> planterList = planterService.viewAllPlanters();
-					
-			return new ResponseEntity<List<Planter>>(planterList, HttpStatus.OK);
-		}
-		
+	   @GetMapping("/planters/{user}/{id}")               
+	    public ResponseEntity<Planter> viewPlanterHandler(@Valid @PathVariable("id") int planterId, @PathVariable("user") String user) throws PlanterException, AdminException, CustomerException {
+	        
+	        Planter obtainedPlanter = planterService.viewPlanter(planterId, user);
+	                
+	        return new ResponseEntity<Planter>(obtainedPlanter, HttpStatus.OK);
+	    }
+	    
+	    
+	    @GetMapping("/plnatershape/{user}/{shape}")              
+	    public ResponseEntity<Planter> viewPlanterByShape(@Valid @PathVariable("shape") String planterShape,@PathVariable("user") String user) throws PlanterException, AdminException, CustomerException {
+	        
+	        Planter planter = planterService.viewPlanter(planterShape,user);
+	                
+	        return new ResponseEntity<Planter>(planter, HttpStatus.OK);
+	    }
+	    
+	    
+	    @GetMapping("/planters/{user}")              
+	    public ResponseEntity<List<Planter>> findAllPlanters(@PathVariable String user) throws PlanterException, AdminException, CustomerException {
+	        
+	        List<Planter> planterList = planterService.viewAllPlanters(user);
+	                
+	        return new ResponseEntity<List<Planter>>(planterList, HttpStatus.OK);
+	    }
+	    
+	    @GetMapping("/planters/{user}/{minCost}/{maxCost}")   
+	    public ResponseEntity<List<Planter>> viewPlantersByCostRange(@Valid @PathVariable("minCost") Integer minCost, @PathVariable("maxCost") Integer maxCost,@PathVariable("user") String user ) throws PlanterException, AdminException, CustomerException {
+	        
+	        List<Planter> planterList = planterService.viewAllPlanters(minCost, maxCost,user);
+	        
+	        return new ResponseEntity<List<Planter>>(planterList, HttpStatus.OK);
+	    }
+	    
+	    
+	    @PostMapping("/plnatersassociate/{user}")
+	    public ResponseEntity<Planter> regiserPlanterWithSeedAndPlantHandler(@RequestParam Integer planter, @RequestParam Integer plantId, @RequestParam Integer seedId,@PathVariable("user") String user) throws PlanterException, AdminException
+	    {
+	        return new ResponseEntity<>(planterService.registerPlanter(planter, plantId, seedId,user),HttpStatus.CREATED);
+	    }
+	    
+	    @PostMapping("/planters/{user}")
+	    public ResponseEntity<Planter> registerPlanterHandler(@RequestBody Planter planter, @PathVariable String user) throws PlanterException, AdminException
+	    {
+	        return new ResponseEntity<>(planterService.addPlanter(planter,user),HttpStatus.CREATED);
+	    }
 
-		@GetMapping("/planters/{minCost}/{maxCost}")   
-		public ResponseEntity<List<Planter>> viewPlantersByCostRange(@Valid @PathVariable("minCost") Integer minCost, @PathVariable("maxCost") Integer maxCost) throws PlanterException {
-			
-			List<Planter> planterList = planterService.viewAllPlanters(minCost, maxCost);
-			
-			return new ResponseEntity<List<Planter>>(planterList, HttpStatus.OK);
-		}
-		
-		
-		@PostMapping("/plnaters")
-		public ResponseEntity<Planter> regiserPlanterWithSeedAndPlantHandler(@RequestParam Integer planter, @RequestParam Integer plantId, @RequestParam Integer seedId) throws PlanterException
-		{
-			return new ResponseEntity<>(planterService.registerPlanter(planter, plantId, seedId),HttpStatus.CREATED);
-		}
-		
 
 }

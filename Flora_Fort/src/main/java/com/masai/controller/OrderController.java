@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.exception.AdminException;
@@ -18,16 +19,15 @@ import com.masai.exception.OrderException;
 import com.masai.model.Orders;
 import com.masai.service.OrderService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 public class OrderController {
 	@Autowired
 	OrderService orderservice;
 
-	@PostMapping("/orders/{user}/{planterId}")
-	ResponseEntity<Orders> creatorderhandler(@RequestBody Orders order,@PathVariable String user,@PathVariable Integer planterId) throws OrderException, CustomerException {
-		Orders neworder = orderservice.addOrder(order,planterId,user);
+	@PostMapping("/orders/{user}/{planterId}/{customerId}")
+	ResponseEntity<Orders> creatorderhandler(@PathVariable Integer customerId, @PathVariable String user,@PathVariable Integer planterId, @RequestBody Orders order) throws OrderException, CustomerException {
+		Orders neworder = orderservice.addOrder(order,planterId,customerId,user);
 		return new ResponseEntity<>(neworder, HttpStatus.CREATED);
 
 	}
@@ -47,7 +47,7 @@ public class OrderController {
 
 	@GetMapping("/orders/{user}/{BookingOrderId}")
 	ResponseEntity<Orders> viewOrderHandler(@PathVariable("BookingOrderId") Integer BookingOrderId,@PathVariable String user)
-			throws OrderException, CustomerException {
+			throws OrderException, CustomerException, AdminException {
 		Orders vieworder = orderservice.viewOrder(BookingOrderId,user);
 		return new ResponseEntity<Orders>(vieworder, HttpStatus.OK);
 	}

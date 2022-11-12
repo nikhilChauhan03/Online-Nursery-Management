@@ -1,6 +1,5 @@
 package com.masai.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +20,8 @@ public class PlantServiceImpl implements PlantService {
 	
 	@Autowired
 	private AdminService adminSerivce;
+	
+	@Autowired
 	private CustomerService customerService;
 	
 	
@@ -79,7 +80,7 @@ public class PlantServiceImpl implements PlantService {
 		if(opt.isPresent()) {
 			
 			Plant plant=opt.get();
-			return plant;
+			return pRepo.save(plant);
 			
 		}
 		else
