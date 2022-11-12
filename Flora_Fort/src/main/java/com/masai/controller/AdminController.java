@@ -35,6 +35,10 @@ public class AdminController {
 	@Autowired
 	AdminService adminService;
 	
+	
+	@Autowired
+	private PlantService pService;
+	
 	@PostMapping("/admins")
 	public ResponseEntity<Admin> registerAdminHandler(@Valid @RequestBody Admin admin) throws AdminException
 	{
@@ -82,12 +86,8 @@ public class AdminController {
 //=================================================	SUBOJIT Plant ======================================
 	
 	
-	@Autowired
-	private PlantService pService;
-	
-	
 	@PostMapping("/plants/{user}")
-	public ResponseEntity<Plant> registerPlantHandler(@PathVariable("user") @RequestBody Plant plant, String user) throws PlantException, AdminException{
+	public ResponseEntity<Plant> registerPlantHandler(@RequestBody Plant plant, @PathVariable String user) throws PlantException, AdminException{
 		
 		Plant savedPlant=pService.registerPlant(plant,user);
 		return new ResponseEntity<Plant>(savedPlant,HttpStatus.CREATED);

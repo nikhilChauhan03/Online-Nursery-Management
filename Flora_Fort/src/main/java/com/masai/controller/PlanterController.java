@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.exception.PlanterException;
@@ -24,7 +26,7 @@ public class PlanterController {
 	private PlanterService planterService;
 	
 	
-		@GetMapping("/showplanter/{id}")               
+		@GetMapping("/planters/{id}")               
 		public ResponseEntity<Planter> viewPlanterHandler(@Valid @PathVariable("id") int planterId) throws PlanterException {
 			
 			Planter obtainedPlanter = planterService.viewPlanter(planterId);
@@ -33,7 +35,7 @@ public class PlanterController {
 		}
 		
 		
-		@GetMapping("/getplanters/{shape}")              
+		@GetMapping("/plnatershape/{shape}")              
 		public ResponseEntity<Planter> viewPlanterByShape(@Valid @PathVariable("shape") String planterShape) throws PlanterException {
 			
 			Planter planter = planterService.viewPlanter(planterShape);
@@ -42,7 +44,7 @@ public class PlanterController {
 		}
 		
 		
-		@GetMapping("/showplanters")              
+		@GetMapping("/planters")              
 		public ResponseEntity<List<Planter>> findAllPlanters() throws PlanterException {
 			
 			List<Planter> planterList = planterService.viewAllPlanters();
@@ -51,12 +53,19 @@ public class PlanterController {
 		}
 		
 
-		@GetMapping("/showplanters/{minCost}/{maxCost}")   
+		@GetMapping("/planters/{minCost}/{maxCost}")   
 		public ResponseEntity<List<Planter>> viewPlantersByCostRange(@Valid @PathVariable("minCost") Integer minCost, @PathVariable("maxCost") Integer maxCost) throws PlanterException {
 			
 			List<Planter> planterList = planterService.viewAllPlanters(minCost, maxCost);
 			
 			return new ResponseEntity<List<Planter>>(planterList, HttpStatus.OK);
+		}
+		
+		
+		@PostMapping("/plnaters")
+		public ResponseEntity<Planter> regiserPlanterWithSeedAndPlantHandler(@RequestParam Integer planter, @RequestParam Integer plantId, @RequestParam Integer seedId) throws PlanterException
+		{
+			return new ResponseEntity<>(planterService.registerPlanter(planter, plantId, seedId),HttpStatus.CREATED);
 		}
 		
 

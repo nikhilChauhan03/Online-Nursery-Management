@@ -180,10 +180,10 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public Boolean validateAdmin(String user) throws AdminException {
 		Admin admin = adminRepositry.findByUserName(user);
-		if(admin == null) throw new AdminException("Invalid Admin User name");
+		if(admin == null) return false;
 		CurrentUserSession checkUser = currentUserSessionRepo.findByUserName(user);
-		if(checkUser == null) throw new AdminException("user is not login");
-		if(!checkUser.getTypeOfUser().equalsIgnoreCase("admin")) throw new AdminException(user+" is not a Admin type user");
+		if(checkUser == null) return false;
+		if(!checkUser.getTypeOfUser().equalsIgnoreCase("admin")) return false;
 		return true;
 		
 	}

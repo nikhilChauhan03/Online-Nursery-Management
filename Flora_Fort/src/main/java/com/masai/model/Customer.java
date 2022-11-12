@@ -1,15 +1,25 @@
 package com.masai.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.ManyToAny;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -45,7 +55,7 @@ public class Customer {
 	@NotNull(message = "userPassword should not be Null")
 	@NotBlank(message = "userPassword should not blank")
 	private String userPassword;
-	
+
 	@NotNull(message = "address should not be null")
 	@Embedded
 	private Address userAddress;

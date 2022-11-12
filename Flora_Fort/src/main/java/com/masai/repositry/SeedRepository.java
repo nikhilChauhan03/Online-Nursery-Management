@@ -8,7 +8,7 @@ import com.masai.model.Seed;
 @Repository
 public interface SeedRepository extends JpaRepository<Seed, Integer>{
 
-	//public Seed findByCommonName(String commonName);
+	public Seed findByCommonName(String commonName);
 	
 	
 	//public Seed addSeedHandler(Seed seed);

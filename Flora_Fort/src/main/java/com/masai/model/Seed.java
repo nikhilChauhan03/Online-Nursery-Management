@@ -1,13 +1,18 @@
 package com.masai.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,13 +39,11 @@ public class Seed {
 	@NotEmpty(message = "Bloom Time should be there...!")
 	private String bloomTime;
 	
-//	@NotEmpty(message = "Water facility can not be empty...!")
 	private String Watering;
 	
 	@NotEmpty(message = "Difficulty Level can not be empty...!")
 	private String difficultyLevel;
 	
-//	@NotBlank(message = "Temperature can not be blank...!")
 	private String Temperature;
 	
 	@NotBlank(message = "Type of Seeds can not be blank...!")
@@ -48,14 +51,16 @@ public class Seed {
 	
 	private String seedsDescription;
 	
-	@NotNull(message = "Seeds Stock can not be null...!")
 	private Integer seedsStock;
 	
-	@NotNull(message = "Seeds Cost can not be null...!")
-	private double seedsCost;
+	private Integer seedsCost;
 	
-	@NotNull(message = "Seeds Per Packet can not be null...!")
 	private Integer seedsPerPacket;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Planter planter;
+
 	
 	
 }

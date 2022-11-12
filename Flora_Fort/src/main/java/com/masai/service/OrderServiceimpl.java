@@ -6,32 +6,52 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.masai.exception.AdminException;
+import com.masai.exception.CustomerException;
 import com.masai.exception.OrderException;
-import com.masai.model.Order;
+import com.masai.model.Orders;
+import com.masai.model.Planter;
 import com.masai.repositry.OrderDao;
+import com.masai.repositry.PlanterRepo;
 
 @Service
 public class OrderServiceimpl implements OrderService {
 
 	@Autowired
 	OrderDao orderdao;
+	
+	@Autowired 
+	CustomerService customerService;
+	
+	@Autowired
+	AdminService adminService;
+	
+	@Autowired
+	PlanterRepo plnaterRepo;
+	
 
 	@Override
-	public Order addOrder(Order order) throws OrderException {
-		// TODO Auto-generated method stub
-		Optional<Order> optional = orderdao.findById(order.getBookingOrderId());
-		if (optional.isPresent()) {
-			throw new OrderException("order already exists...." + order.getBookingOrderId());
-		} else {
-			orderdao.save(order);
-			return order;
-		}
+	public Orders addOrder(Orders order,Integer planterId, String user) throws OrderException, CustomerException {
+		
+		if(!customerService.validateCustomer(user))throw new CustomerException("user is not valid or not logged in");
+		
+		if(order.getBookingOrderId() != null) throw new OrderException("BookinOrderId is not requried");
+		
+		Planter planter = plnaterRepo.findById(planterId)
+		.orElseThrow(() -> new OrderException("Invalid planter Id"));
+		
+		order.setPlanters(planter);
+		
+		planter.getOrders().add(order);
+		
+		return orderdao.save(order);
 
 	}
 
 	@Override
-	public Order updateOrder(Order order) throws OrderException {
-		Order existingOrder = orderdao.findById(order.getBookingOrderId())
+	public Orders updateOrder(Orders order,String user) throws OrderException, CustomerException {
+		if(!customerService.validateCustomer(user))throw new CustomerException("user is not valid or not logged in");
+		Orders existingOrder = orderdao.findById(order.getBookingOrderId())
 				.orElseThrow(() -> new OrderException(
 						"Invalid Order details. Please provide the valid details. Booking Order Id is not vlaid"));
 
@@ -40,11 +60,11 @@ public class OrderServiceimpl implements OrderService {
 	}
 
 	@Override
-	public Order deleteOrder(int BookingOrderId) throws OrderException {
-		// TODO Auto-generated method stub
-		Optional<Order> optional = orderdao.findById(BookingOrderId);
+	public Orders deleteOrder(int BookingOrderId,String user) throws OrderException, CustomerException {
+		if(!customerService.validateCustomer(user))throw new CustomerException("user is not valid or not logged in");
+		Optional<Orders> optional = orderdao.findById(BookingOrderId);
 		if (optional.isPresent()) {
-			Order order = optional.get();
+			Orders order = optional.get();
 			orderdao.delete(order);
 			return order;
 		} else {
@@ -54,10 +74,11 @@ public class OrderServiceimpl implements OrderService {
 	}
 
 	@Override
-	public Order viewOrder(int BookingOrderId) throws OrderException {
-		Optional<Order> optional = orderdao.findById(BookingOrderId);
+	public Orders viewOrder(int BookingOrderId,String user) throws OrderException, CustomerException {
+		if(!customerService.validateCustomer(user))throw new CustomerException("user is not valid or not logged in");
+		Optional<Orders> optional = orderdao.findById(BookingOrderId);
 		if(optional.isPresent()) {
-		Order order = optional.get();
+		Orders order = optional.get();
 			return order;
 		} else {
 			throw new OrderException("order does not exists with " + BookingOrderId);
@@ -65,10 +86,10 @@ public class OrderServiceimpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> viewAllOrder() throws OrderException {
-		// TODO Auto-generated method stub
-		List<Order> orders = orderdao.findAll();
-		if(orders.isEmpty()) throw new OrderException("No customer is registered in database");
+	public List<Orders> viewAllOrder(String user) throws OrderException, CustomerException, AdminException {
+		if(!customerService.validateCustomer(user) || !adminService.validateAdmin(user))throw new CustomerException("user is not valid or not logged in");
+		List<Orders> orders = orderdao.findAll();
+		if(orders.isEmpty()) throw new OrderException("No order is registered in database");
 		return orders;
 	}
 

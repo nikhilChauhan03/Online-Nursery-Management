@@ -88,11 +88,11 @@ public class CustomerController {
 		
 	}
 	@GetMapping("/getplants/{cname}/{user}")
-	public ResponseEntity<List<Plant>>getPlantByCommonNameHandler(@PathVariable("cname") String cname, @PathVariable("user")String user) throws PlantException, CustomerException{
+	public ResponseEntity<Plant>getPlantByCommonNameHandler(@PathVariable("cname") String cname, @PathVariable("user")String user) throws PlantException, CustomerException{
 		
-		List<Plant>plants=pService.getPlantByCommonName(cname,user);
+		Plant plants=pService.getPlantByCommonName(cname,user);
 		
-		return new ResponseEntity<List<Plant>>(plants,HttpStatus.OK);
+		return new ResponseEntity<Plant>(plants,HttpStatus.OK);
 		
 	}
 	

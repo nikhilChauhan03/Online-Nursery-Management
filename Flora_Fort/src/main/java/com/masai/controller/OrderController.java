@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.masai.exception.AdminException;
+import com.masai.exception.CustomerException;
 import com.masai.exception.OrderException;
-import com.masai.model.Order;
+import com.masai.model.Orders;
 import com.masai.service.OrderService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -23,37 +25,37 @@ public class OrderController {
 	@Autowired
 	OrderService orderservice;
 
-	@PostMapping("/create-order")
-	ResponseEntity<Order> creatorderhandler(@RequestBody Order order) throws OrderException {
-		Order neworder = orderservice.addOrder(order);
+	@PostMapping("/orders/{user}/{planterId}")
+	ResponseEntity<Orders> creatorderhandler(@RequestBody Orders order,@PathVariable String user,@PathVariable Integer planterId) throws OrderException, CustomerException {
+		Orders neworder = orderservice.addOrder(order,planterId,user);
 		return new ResponseEntity<>(neworder, HttpStatus.CREATED);
 
 	}
 
-	@PutMapping("/update-order")
-	ResponseEntity<Order> UpdateOrderHandler(@RequestBody Order order) throws OrderException {
-		Order updateorder = orderservice.updateOrder(order);
-		return new ResponseEntity<Order>(updateorder, HttpStatus.OK);
+	@PutMapping("/orders/{user}")
+	ResponseEntity<Orders> UpdateOrderHandler(@RequestBody Orders order,@PathVariable String user) throws OrderException, CustomerException {
+		Orders updateorder = orderservice.updateOrder(order,user);
+		return new ResponseEntity<Orders>(updateorder, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete-order/{BookingOrderId}")
-	ResponseEntity<Order> deleteOrderHandler(@PathVariable("BookingOrderId") Integer BookingOrderId)
-			throws OrderException {
-		Order orderdeleted = orderservice.deleteOrder(BookingOrderId);
-		return new ResponseEntity<Order>(orderdeleted, HttpStatus.OK);
+	@DeleteMapping("/orders/{user}/{BookingOrderId}")
+	ResponseEntity<Orders> deleteOrderHandler(@PathVariable("BookingOrderId") Integer BookingOrderId,@PathVariable String user)
+			throws OrderException, CustomerException {
+		Orders orderdeleted = orderservice.deleteOrder(BookingOrderId,user);
+		return new ResponseEntity<Orders>(orderdeleted, HttpStatus.OK);
 	}
 
-	@GetMapping("/view-order/{BookingOrderId}")
-	ResponseEntity<Order> viewOrderHandler(@PathVariable("BookingOrderId") Integer BookingOrderId)
-			throws OrderException {
-		Order vieworder = orderservice.viewOrder(BookingOrderId);
-		return new ResponseEntity<Order>(vieworder, HttpStatus.OK);
+	@GetMapping("/orders/{user}/{BookingOrderId}")
+	ResponseEntity<Orders> viewOrderHandler(@PathVariable("BookingOrderId") Integer BookingOrderId,@PathVariable String user)
+			throws OrderException, CustomerException {
+		Orders vieworder = orderservice.viewOrder(BookingOrderId,user);
+		return new ResponseEntity<Orders>(vieworder, HttpStatus.OK);
 	}
 
-	@GetMapping("/view-Allorder")
-	ResponseEntity<List <Order>> viewAllOrderHandler()throws OrderException{
-		List<Order> Allorders= orderservice.viewAllOrder();
-		return new ResponseEntity<List <Order>>(Allorders, HttpStatus.OK);
+	@GetMapping("/orders/{user}")
+	ResponseEntity<List <Orders>> viewAllOrderHandler(@PathVariable String user)throws OrderException, CustomerException, AdminException{
+		List<Orders> Allorders= orderservice.viewAllOrder(user);
+		return new ResponseEntity<List <Orders>>(Allorders, HttpStatus.OK);
 	}
 
 }

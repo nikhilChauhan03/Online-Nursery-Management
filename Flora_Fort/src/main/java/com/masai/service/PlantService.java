@@ -13,13 +13,15 @@ public interface PlantService {
 	
 	public Plant registerPlant(Plant plant, String user)throws PlantException, AdminException;
 	
+	
+	
 	public Plant updatePlantDetails(Plant plant,String str) throws PlantException, AdminException;
 	
 	public Plant deletePlantById(Integer id,String str) throws PlantException, AdminException;
 	
 	public Plant getPlantById(Integer id,String str)throws PlantException, CustomerException;
 	
-	public List<Plant> getPlantByCommonName(String cname,String str) throws PlantException, CustomerException;
+	public Plant getPlantByCommonName(String cname,String str) throws PlantException, CustomerException;
 	
 	
 

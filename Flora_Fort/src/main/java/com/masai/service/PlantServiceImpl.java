@@ -27,12 +27,11 @@ public class PlantServiceImpl implements PlantService {
 	
 	
 	@Override
-	public Plant registerPlant(Plant p, String users) throws AdminException,PlantException {
+	public Plant registerPlant(Plant p,String user) throws AdminException,PlantException {
 		
-		adminSerivce.validateAdmin(users);
+		if(!adminSerivce.validateAdmin(user))throw new AdminException("user is not valid or not logged in");
 		
-		Plant savedPlant=pRepo.save(p);
-		return savedPlant;
+		return pRepo.save(p);
 		
 	}
 
@@ -40,7 +39,7 @@ public class PlantServiceImpl implements PlantService {
 	@Override
 	public Plant updatePlantDetails(Plant plant, String user) throws PlantException, AdminException {
 		
-		adminSerivce.validateAdmin(user);
+		if(!adminSerivce.validateAdmin(user))throw new AdminException("user is not valid or not logged in");
 		
 		Optional<Plant>opt=pRepo.findById(plant.getPlantId());
 		if(opt.isPresent())
@@ -57,7 +56,7 @@ public class PlantServiceImpl implements PlantService {
 	@Override
 	public Plant deletePlantById(Integer id, String str) throws PlantException, AdminException {
 		
-		adminSerivce.validateAdmin(str);
+		if(!adminSerivce.validateAdmin(str))throw new AdminException("user is not valid or not logged in");
 		Optional<Plant>opt=pRepo.findById(id);
 		if(opt.isPresent()) {
 			Plant existing=opt.get();
@@ -74,7 +73,7 @@ public class PlantServiceImpl implements PlantService {
 	@Override
 	public Plant getPlantById(Integer id,String str) throws PlantException,CustomerException {
 		
-		customerService.validateCustomer(str);
+		if(!customerService.validateCustomer(str))throw new CustomerException("user is not valid or not logged in");
 		
 		Optional<Plant>opt=pRepo.findById(id);
 		if(opt.isPresent()) {
@@ -90,14 +89,14 @@ public class PlantServiceImpl implements PlantService {
 
 
 	@Override
-	public List<Plant> getPlantByCommonName(String cname,String str) throws PlantException,CustomerException {
+	public Plant getPlantByCommonName(String cname,String str) throws PlantException,CustomerException {
 		
-		customerService.validateCustomer(str);
+		if(!customerService.validateCustomer(str))throw new CustomerException("user is not valid or not logged in");
 		
-		List<Plant>plants=pRepo.findBycommonName(cname);
-		if(plants.size()==0)
+		Plant plants=pRepo.findByCommonName(cname);
+		if(plants == null)
 			throw new PlantException("No such plant with "+cname);
-		else
-			return plants;
+
+		return plants;
 	}
 }

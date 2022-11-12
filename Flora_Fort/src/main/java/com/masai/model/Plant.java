@@ -1,13 +1,17 @@
 package com.masai.model;
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -56,17 +60,15 @@ public class Plant {
 	@NotBlank(message = "Description should not blank")
 	private String description;
 	
-	@NotNull(message = "plantStock should not be Null")
-	@NotBlank(message = "plantStock should not blank")
+
 	private Integer plantStock;
 	
-	@NotNull(message = "cost should not be Null")
-	@NotBlank(message = "cost should not blank")
+
 	private Integer cost;
 	
-
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Planter planter;
 	
 	
-	
-
 }

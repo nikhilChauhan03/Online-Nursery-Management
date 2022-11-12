@@ -7,13 +7,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.masai.exception.PlanterException;
+import com.masai.model.Plant;
 import com.masai.model.Planter;
+import com.masai.model.Seed;
+import com.masai.repositry.PlantRepo;
 import com.masai.repositry.PlanterRepo;
+import com.masai.repositry.SeedRepository;
 
 @Service
 public class PlanterServiceimpl  implements PlanterService{
 	@Autowired
 	private PlanterRepo planterdao; 
+	
+	
+	@Autowired
+	private PlantRepo plantRepo;
+	
+	@Autowired
+	private SeedRepository seedRepo;
 	
 	@Override
 	public Planter addPlanter(Planter planter) {
@@ -119,6 +130,31 @@ public class PlanterServiceimpl  implements PlanterService{
 	public Integer viewcost(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+//	--------------------------------register planter with plant and seed ------------------------------------
+	
+	@Override
+	public Planter registerPlanter(Integer planterId,Integer plantId, Integer seedId) throws PlanterException{
+
+		Plant plant = plantRepo.findById(plantId).orElseThrow(() -> new PlanterException("Invalid plnatId"));
+		
+		Seed seed = seedRepo.findById(seedId).orElseThrow(() -> new PlanterException("Invalid seedId"));
+		
+		Planter planter = planterdao.findById(planterId).orElseThrow(() -> new PlanterException("Invalid plnaterId"));
+		
+		planter.getPlants().add(plant);
+		plant.setPlanter(planter);
+		
+		
+		planter.getSeeds().add(seed);
+		seed.setPlanter(planter);
+
+	
+		return planterdao.save(planter);
+		
+		
+		
 	}
 
 }

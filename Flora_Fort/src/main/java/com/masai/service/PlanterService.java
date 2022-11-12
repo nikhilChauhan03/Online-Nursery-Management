@@ -7,6 +7,8 @@ import com.masai.model.Planter;
 
 public interface PlanterService {
 	public Planter addPlanter(Planter planter);
+	
+	public Planter registerPlanter(Integer planter, Integer plantId, Integer seedId) throws PlanterException;
 
 	public Planter updatePlanter(Planter planter) throws PlanterException;
 

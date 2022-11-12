@@ -143,11 +143,12 @@ public class CustomerServiceImpl implements CustomerService{
 	public Boolean validateCustomer(String user) throws CustomerException{
 		
 		Customer customer = customerRepositry.findByUserName(user);
-		if(customer == null) throw new CustomerException("Invalid Customer UserName");
+		if(customer == null) return false;
 		
 		CurrentUserSession checkCustomer = currentUserSessionRepo.findByUserName(user);
 		if(checkCustomer == null) return false;
-		if(!checkCustomer.getTypeOfUser().equalsIgnoreCase("customer")) throw new CustomerException(user + " is not a customer type user");
+		if(!checkCustomer.getTypeOfUser().equalsIgnoreCase("customer")) return false;
+		
 		return true;
 		
 	}

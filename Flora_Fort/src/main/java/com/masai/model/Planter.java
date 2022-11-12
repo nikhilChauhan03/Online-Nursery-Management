@@ -1,11 +1,14 @@
 package com.masai.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
@@ -45,78 +48,13 @@ public class Planter {
 	
 	@Min(value = 1, message = "Planter's cost can't be 0")
 	private Integer planterCost;
-
-	public Integer getPlanterId() {
-		return planterId;
-	}
-
-	public void setPlanterId(Integer planterId) {
-		this.planterId = planterId;
-	}
-
-	public Float getPlanterheight() {
-		return planterheight;
-	}
-
-	public void setPlanterheight(Float planterheight) {
-		this.planterheight = planterheight;
-	}
-
-	public Integer getPlanterCapacity() {
-		return planterCapacity;
-	}
-
-	public void setPlanterCapacity(Integer planterCapacity) {
-		this.planterCapacity = planterCapacity;
-	}
-
-	public Integer getDrinageHoles() {
-		return drinageHoles;
-	}
-
-	public void setDrinageHoles(Integer drinageHoles) {
-		this.drinageHoles = drinageHoles;
-	}
-
-	public String getPlanterColor() {
-		return planterColor;
-	}
-
-	public void setPlanterColor(String planterColor) {
-		this.planterColor = planterColor;
-	}
-
-	public String getPlanterShape() {
-		return planterShape;
-	}
-
-	public void setPlanterShape(String planterShape) {
-		this.planterShape = planterShape;
-	}
-
-	public Integer getPlanterStock() {
-		return planterStock;
-	}
-
-	public void setPlanterStock(Integer planterStock) {
-		this.planterStock = planterStock;
-	}
-
-	public Integer getPlanterCost() {
-		return planterCost;
-	}
-
-	public void setPlanterCost(Integer planterCost) {
-		this.planterCost = planterCost;
-	}
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	private  List<Plant> plants = new ArrayList<>();
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	private  List<Seed> seeds = new ArrayList<>();
 
-
-
-//private List<Plant> plants;
-//
-//
-//private List<Seed> seeds;
-
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Orders> orders = new ArrayList<>();
 }

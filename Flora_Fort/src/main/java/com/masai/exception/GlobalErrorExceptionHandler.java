@@ -86,16 +86,7 @@ public class GlobalErrorExceptionHandler {
 		return new ResponseEntity<MyErrorDetails>(err,HttpStatus.BAD_REQUEST);
 	}
 	
-	
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<MyErrorDetails> MANVExceptionHandler(MethodArgumentNotValidException me) {
-		
-		MyErrorDetails err = new MyErrorDetails(LocalDateTime.now(),"Validation Error",me.getBindingResult().getFieldError().getDefaultMessage());
-		
-		
-		
-		return new ResponseEntity<MyErrorDetails>(err, HttpStatus.BAD_REQUEST);
-	}
+
 	@ExceptionHandler(NoHandlerFoundException.class)
 	public ResponseEntity<MyErrorDetails> notFoundExceptionHandler(NoHandlerFoundException nfe, WebRequest req ){
 		
@@ -105,25 +96,7 @@ public class GlobalErrorExceptionHandler {
 		return new ResponseEntity<MyErrorDetails>(err, HttpStatus.BAD_REQUEST);
 	}
 	
-	@ExceptionHandler(Exception.class) 
-	public ResponseEntity<MyErrorDetails> otherExceptionHandler(Exception e, WebRequest req) {
-		
-		MyErrorDetails err = new MyErrorDetails(LocalDateTime.now(),e.getMessage(),req.getDescription(false));
-		
-		return new ResponseEntity<MyErrorDetails>(err, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
+
 	
-	
-	
-//	@ExceptionHandler(SqlExceptionHelper.class)
-//	public ResponseEntity<MyErrorDetails> myExceptionHandler(DataIntegrityViolationException ce, WebRequest rq)
-//	{
-//		
-//		MyErrorDetails md = new MyErrorDetails(LocalDateTime.now(), , rq.getDescription(false));
-//		
-//		return new ResponseEntity<MyErrorDetails>(md,HttpStatus.BAD_REQUEST);
-//		
-//	}
-//	
 	
 }
