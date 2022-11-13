@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,13 @@ public class PlanterController {
 		return new ResponseEntity<Planter>(obtainedPlanter, HttpStatus.OK);
 	}
 
+	@PutMapping("/planters/{user}")
+	ResponseEntity<Planter> UpdatePlanterHandler(@RequestBody Planter planter, @PathVariable String user)
+			throws PlanterException, CustomerException, AdminException {
+		Planter updatePlanter = planterService.updatePlanter(planter, user);
+		return new ResponseEntity<Planter>(updatePlanter, HttpStatus.OK);
+	}
+
 	@GetMapping("/plnatershape/{user}/{shape}")
 	public ResponseEntity<Planter> viewPlanterByShape(@Valid @PathVariable("shape") String planterShape,
 			@PathVariable("user") String user) throws PlanterException, AdminException, CustomerException {
@@ -48,8 +56,8 @@ public class PlanterController {
 	}
 
 	@DeleteMapping("/planters/{user}/{id}")
-	public ResponseEntity<Planter> deletePlanterHandler(@PathVariable("id") Planter planter,
-			@PathVariable String user) throws PlanterException, CustomerException, AdminException {
+	public ResponseEntity<Planter> deletePlanterHandler(@PathVariable("id") Planter planter, @PathVariable String user)
+			throws PlanterException, CustomerException, AdminException {
 		Planter Planterdeleted = planterService.deletePlanter(planter, user);
 		return new ResponseEntity<Planter>(Planterdeleted, HttpStatus.OK);
 	}
