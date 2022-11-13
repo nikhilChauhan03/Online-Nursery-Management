@@ -47,19 +47,19 @@ public class PlantController {
 		return new ResponseEntity<Plant>(deleted,HttpStatus.OK);
 	}
 	
-	@GetMapping("/plants/{plant_id}/{admin_userName}")
-	public ResponseEntity<Plant>getPlantByIdHandler(@PathVariable Integer plant_id, @PathVariable String admin_userName)throws PlantException,CustomerException{
+	@GetMapping("/plants/{plant_id}/{userName}")
+	public ResponseEntity<Plant>getPlantByIdHandler(@PathVariable Integer plant_id, @PathVariable String userName)throws PlantException,CustomerException, AdminException{
 		
-		Plant plant=pService.getPlantById(plant_id,admin_userName);
+		Plant plant=pService.getPlantById(plant_id,userName);
 		return new ResponseEntity<Plant>(plant,HttpStatus.OK);
-			
-		
-		
+				
 	}
-	@GetMapping("/getplants/{plant_common_name}/{admin_userName}")
-	public ResponseEntity<Plant>getPlantByCommonNameHandler(@PathVariable String plant_common_name, @PathVariable String admin_userName) throws PlantException, CustomerException{
+	
+	
+	@GetMapping("/getplants/{plant_common_name}/{userName}")
+	public ResponseEntity<Plant>getPlantByCommonNameHandler(@PathVariable String plant_common_name, @PathVariable String userName) throws PlantException, CustomerException, AdminException{
 		
-		Plant plants=pService.getPlantByCommonName(plant_common_name,admin_userName);
+		Plant plants=pService.getPlantByCommonName(plant_common_name,userName);
 		
 		return new ResponseEntity<Plant>(plants,HttpStatus.OK);
 		

@@ -19,9 +19,9 @@ public interface PlantService {
 	
 	public Plant deletePlantById(Integer id,String str) throws PlantException, AdminException;
 	
-	public Plant getPlantById(Integer id,String str)throws PlantException, CustomerException;
+	public Plant getPlantById(Integer id,String str)throws PlantException, CustomerException,AdminException;
 	
-	public Plant getPlantByCommonName(String cname,String str) throws PlantException, CustomerException;
+	public Plant getPlantByCommonName(String cname,String str) throws PlantException, CustomerException ,AdminException;
 	
 	
 

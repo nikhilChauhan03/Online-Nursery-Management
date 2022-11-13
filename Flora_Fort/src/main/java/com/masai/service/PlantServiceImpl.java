@@ -72,9 +72,10 @@ public class PlantServiceImpl implements PlantService {
 
 
 	@Override
-	public Plant getPlantById(Integer id,String str) throws PlantException,CustomerException {
+	public Plant getPlantById(Integer id,String str) throws PlantException,CustomerException, AdminException {
 		
-		if(!customerService.validateCustomer(str))throw new CustomerException("user is not valid or not logged in");
+		if(!(adminSerivce.validateAdmin(str) || customerService.validateCustomer(str)))
+            throw new AdminException("user is not valid...!");
 		
 		Optional<Plant>opt=pRepo.findById(id);
 		if(opt.isPresent()) {
@@ -90,9 +91,10 @@ public class PlantServiceImpl implements PlantService {
 
 
 	@Override
-	public Plant getPlantByCommonName(String cname,String str) throws PlantException,CustomerException {
+	public Plant getPlantByCommonName(String cname,String str) throws PlantException,CustomerException, AdminException {
 		
-		if(!customerService.validateCustomer(str))throw new CustomerException("user is not valid or not logged in");
+		 if(!(adminSerivce.validateAdmin(str) || customerService.validateCustomer(str)))
+	            throw new AdminException("user is not valid...!");
 		
 		Plant plants=pRepo.findByCommonName(cname);
 		if(plants == null)
