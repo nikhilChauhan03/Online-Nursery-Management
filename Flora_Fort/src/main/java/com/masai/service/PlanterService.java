@@ -13,7 +13,7 @@ public Planter addPlanter(Planter planter,String user)throws AdminException;
     
     public Planter registerPlanter(Integer planter, Integer plantId, Integer seedId,String user) throws PlanterException,AdminException;
     public Planter updatePlanter(Planter planter,String user) throws PlanterException,AdminException;
-    public Planter deletePlanter(Planter planter,String user) throws PlanterException,AdminException;
+    public Planter deletePlanter(Integer planterId,String user) throws PlanterException,AdminException;
     public Planter viewPlanter(Integer planterId,String user) throws PlanterException,AdminException,CustomerException;
     public Planter viewPlanter(String planterShape,String user) throws PlanterException,AdminException,CustomerException;
     

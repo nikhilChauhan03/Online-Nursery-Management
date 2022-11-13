@@ -23,43 +23,43 @@ public class PlantController {
 	@Autowired
 	private PlantService pService;
 	
-	@PostMapping("/plants/{user}")
-	public ResponseEntity<Plant> registerPlantHandler(@RequestBody Plant plant, @PathVariable String user) throws PlantException, AdminException{
+	@PostMapping("/plants/{admin_userName}")
+	public ResponseEntity<Plant> registerPlantHandler(@RequestBody Plant plant, @PathVariable String admin_userName) throws PlantException, AdminException{
 		
-		Plant savedPlant=pService.registerPlant(plant,user);
+		Plant savedPlant=pService.registerPlant(plant,admin_userName);
 		return new ResponseEntity<Plant>(savedPlant,HttpStatus.CREATED);
 		
 	}
 	
-	@PutMapping("/plants/{user}")
-	public ResponseEntity<Plant>updatePlantsHandler(@RequestBody Plant plant,@PathVariable("user") String user)throws PlantException, AdminException{
+	@PutMapping("/plants/{admin_userName}")
+	public ResponseEntity<Plant>updatePlantsHandler(@RequestBody Plant plant,@PathVariable("admin_userName") String admin_userName)throws PlantException, AdminException{
 		
-		Plant updated=pService.updatePlantDetails(plant,user);
+		Plant updated=pService.updatePlantDetails(plant,admin_userName);
 		
 		return new ResponseEntity<Plant>(updated,HttpStatus.ACCEPTED);
 		
 		
 	}
-	@DeleteMapping("/plants/{id}/{user}")
-	public ResponseEntity<Plant>deletePlantByIdHandler(@PathVariable("id") Integer id, @PathVariable("user")String user) throws PlantException, AdminException{
+	@DeleteMapping("/plants/{plant_id}/{admin_userName}")
+	public ResponseEntity<Plant>deletePlantByIdHandler(@PathVariable Integer plant_id, @PathVariable String admin_userName) throws PlantException, AdminException{
 		
-		Plant deleted=pService.deletePlantById(id,user);
+		Plant deleted=pService.deletePlantById(plant_id,admin_userName);
 		return new ResponseEntity<Plant>(deleted,HttpStatus.OK);
 	}
 	
-	@GetMapping("/plants/{id}/{user}")
-	public ResponseEntity<Plant>getPlantByIdHandler(@PathVariable("id") Integer id, @PathVariable("user") String user)throws PlantException,CustomerException{
+	@GetMapping("/plants/{plant_id}/{admin_userName}")
+	public ResponseEntity<Plant>getPlantByIdHandler(@PathVariable Integer plant_id, @PathVariable String admin_userName)throws PlantException,CustomerException{
 		
-		Plant plant=pService.getPlantById(id,user);
+		Plant plant=pService.getPlantById(plant_id,admin_userName);
 		return new ResponseEntity<Plant>(plant,HttpStatus.OK);
 			
 		
 		
 	}
-	@GetMapping("/getplants/{cname}/{user}")
-	public ResponseEntity<Plant>getPlantByCommonNameHandler(@PathVariable("cname") String cname, @PathVariable("user")String user) throws PlantException, CustomerException{
+	@GetMapping("/getplants/{plant_common_name}/{admin_userName}")
+	public ResponseEntity<Plant>getPlantByCommonNameHandler(@PathVariable String plant_common_name, @PathVariable String admin_userName) throws PlantException, CustomerException{
 		
-		Plant plants=pService.getPlantByCommonName(cname,user);
+		Plant plants=pService.getPlantByCommonName(plant_common_name,admin_userName);
 		
 		return new ResponseEntity<Plant>(plants,HttpStatus.OK);
 		

@@ -58,9 +58,9 @@ public class PlanterServiceimpl  implements PlanterService{
 	        
 	    }
 	    @Override
-	    public Planter deletePlanter(Planter planter,String user) throws PlanterException,AdminException   {
+	    public Planter deletePlanter(Integer planterId,String user) throws PlanterException,AdminException   {
 	        if(!adminSerivce.validateAdmin(user))throw new AdminException("user is not valid or not logged in");
-	        Optional<Planter> opt= planterdao.findById(planter.getPlanterId());
+	        Optional<Planter> opt= planterdao.findById(planterId);
 	        
 	        if(opt.isPresent()) {
 	            

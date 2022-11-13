@@ -20,24 +20,15 @@ import com.masai.DTO.LogoutDTO;
 
 import com.masai.exception.AdminException;
 import com.masai.exception.CustomerException;
-import com.masai.exception.PlantException;
 import com.masai.model.Admin;
-import com.masai.model.CurrentUserSession;
 import com.masai.model.Customer;
-import com.masai.model.Plant;
-import com.masai.repositry.AdminRepositry;
 import com.masai.service.AdminService;
-import com.masai.service.PlantService;
 
 @RestController
 public class AdminController {
 
 	@Autowired
 	AdminService adminService;
-	
-	
-	@Autowired
-	private PlantService pService;
 	
 	@PostMapping("/admins")
 	public ResponseEntity<Admin> registerAdminHandler(@Valid @RequestBody Admin admin) throws AdminException
@@ -63,22 +54,22 @@ public class AdminController {
 		return new ResponseEntity<LogoutDTO>(adminService.deleteAdmin(adminId),HttpStatus.ACCEPTED);
 	}
 	
-	@GetMapping("/admins/{user}")
-	public ResponseEntity<List<Customer>> viewAllCustomersHandler(@PathVariable String user) throws AdminException, CustomerException
+	@GetMapping("/admins/{admin_username}")
+	public ResponseEntity<List<Customer>> viewAllCustomersHandler(@PathVariable String admin_username) throws AdminException, CustomerException
 	{
-		return new ResponseEntity<List<Customer>>(adminService.viewAllCustomers(user),HttpStatus.ACCEPTED);
+		return new ResponseEntity<List<Customer>>(adminService.viewAllCustomers(admin_username),HttpStatus.ACCEPTED);
 	}
 	
-	@DeleteMapping("/adminslogout/{user}")
-	public ResponseEntity<LogoutDTO> logOutAdminHandler(@PathVariable String user) throws AdminException
+	@DeleteMapping("/adminslogout/{admin_username}")
+	public ResponseEntity<LogoutDTO> logOutAdminHandler(@PathVariable String admin_username) throws AdminException
 	{
-		return new ResponseEntity<LogoutDTO>(adminService.logOutAdmin(user),HttpStatus.ACCEPTED);
+		return new ResponseEntity<LogoutDTO>(adminService.logOutAdmin(admin_username),HttpStatus.ACCEPTED);
 	}
 	
-	@GetMapping("/getcustomer/{customerId}/{user}")
-	public ResponseEntity<Customer> getCustomerByIdHandler(@PathVariable Integer customerId, @PathVariable String user) throws AdminException, CustomerException
+	@GetMapping("/getcustomer/{customerId}/{admin_username}")
+	public ResponseEntity<Customer> getCustomerByIdHandler(@PathVariable Integer customerId, @PathVariable String admin_username) throws AdminException, CustomerException
 	{
-		return new ResponseEntity<Customer>(adminService.getCustomerById(customerId,user),HttpStatus.ACCEPTED);
+		return new ResponseEntity<Customer>(adminService.getCustomerById(customerId,admin_username),HttpStatus.ACCEPTED);
 	}
 	
 		

@@ -25,28 +25,28 @@ public class SeedController {
 	 @Autowired
 	    private SeedService sService;
 	    
-	    @PostMapping("/seeds/{user}")
-	    public ResponseEntity<Seed> addSeedHandler(@RequestBody Seed seed, @PathVariable String user) throws SeedException, AdminException{
+	    @PostMapping("/seeds/{admin_userName}")
+	    public ResponseEntity<Seed> addSeedHandler(@RequestBody Seed seed, @PathVariable String admin_userName) throws SeedException, AdminException{
 	        
-	        Seed seeds = sService.addSeed(seed, user);
+	        Seed seeds = sService.addSeed(seed, admin_userName);
 	        
 	        return new ResponseEntity<Seed>(seeds, HttpStatus.CREATED);
 	        
 	    }
 	    
-	    @PutMapping("/seeds/{user}")
-	    public ResponseEntity<Seed> updateSeedHandler(@RequestBody Seed seed, @PathVariable String user) throws SeedException, AdminException{
+	    @PutMapping("/seeds/{admin_userName}")
+	    public ResponseEntity<Seed> updateSeedHandler(@RequestBody Seed seed, @PathVariable String admin_userName) throws SeedException, AdminException{
 	        
-	        Seed seeds = sService.updateSeed(seed, user);
+	        Seed seeds = sService.updateSeed(seed, admin_userName);
 	        
 	        return new ResponseEntity<Seed>(seeds, HttpStatus.ACCEPTED);
 	        
 	    }
 	    
-	    @DeleteMapping("/seeds/{user}/{id}")
-	    public ResponseEntity<Seed> deleteSeedHandler(@PathVariable("id") Integer seedId, @PathVariable String user) throws SeedException, AdminException{
+	    @DeleteMapping("/seeds/{admin_userName}/{id}")
+	    public ResponseEntity<Seed> deleteSeedHandler(@PathVariable("id") Integer seedId, @PathVariable String admin_userName) throws SeedException, AdminException{
 	        
-	        Seed seeds = sService.deleteSeed(seedId, user);
+	        Seed seeds = sService.deleteSeed(seedId, admin_userName);
 	        
 	        return new ResponseEntity<Seed>(seeds, HttpStatus.OK);
 	        
@@ -61,28 +61,28 @@ public class SeedController {
 	        
 	    }
 	    
-	    @GetMapping("/seedsname/{user}/{name}")
-	    public ResponseEntity<List<Seed>> viewSeedHandler2(@PathVariable String name,@PathVariable String user) throws SeedException, AdminException,CustomerException{
+	    @GetMapping("/seedsname/{userName}/{seed_commonName}")
+	    public ResponseEntity<List<Seed>> viewSeedHandler2(@PathVariable String seed_commonName,@PathVariable String userName) throws SeedException, AdminException,CustomerException{
 	        
-	        List<Seed> seeds = sService.viewSeed(name,user);
-	        
-	        return new ResponseEntity<List<Seed>>(seeds, HttpStatus.OK);
-	        
-	    }
-	    
-	    @GetMapping("/seeds/{user}")
-	    public ResponseEntity<List<Seed>> viewAllSeedHandler(@PathVariable String user) throws SeedException, AdminException,CustomerException{
-	        
-	        List<Seed> seeds = sService.viewAllSeeds(user);
+	        List<Seed> seeds = sService.viewSeed(seed_commonName,userName);
 	        
 	        return new ResponseEntity<List<Seed>>(seeds, HttpStatus.OK);
 	        
 	    }
 	    
-	    @GetMapping("/seedstype/{user}/{type}")
-	    public ResponseEntity<List<Seed>> viewAllSeedByTypeHandler(@PathVariable String type,@PathVariable String user) throws SeedException, AdminException,CustomerException{
+	    @GetMapping("/seeds/{userName}")
+	    public ResponseEntity<List<Seed>> viewAllSeedHandler(@PathVariable String userName) throws SeedException, AdminException,CustomerException{
 	        
-	        List<Seed> seeds = sService.viewAllSeeds(type,user);
+	        List<Seed> seeds = sService.viewAllSeeds(userName);
+	        
+	        return new ResponseEntity<List<Seed>>(seeds, HttpStatus.OK);
+	        
+	    }
+	    
+	    @GetMapping("/seedstype/{userName}/{seed_type}")
+	    public ResponseEntity<List<Seed>> viewAllSeedByTypeHandler(@PathVariable String seed_type,@PathVariable String userName) throws SeedException, AdminException,CustomerException{
+	        
+	        List<Seed> seeds = sService.viewAllSeeds(seed_type,userName);
 	        
 	        return new ResponseEntity<List<Seed>>(seeds, HttpStatus.OK);
 	        
