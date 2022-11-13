@@ -10,10 +10,10 @@
 [FLORA FORT is a online garden store with vast collection of plants, seeds and garden accessories.A one-stop-shop for all gardening related requirements, FLORA FORT has more than 6000 products available online for delivery across India saving you numerous messy trips to various nurseries.We cater to all kinds of gardening needs ranging from plants, pots, tools, to curated plant-scaping solutions. Our ever-growing platform integrates nurseries and customers across India. ]()
 ## Functions:
 
-### Base
+### Base:
 - FloraFortApplication
 
-### Controller
+### Controller:
 - AdminController
 - CustomerController
 - OrderController
@@ -30,7 +30,7 @@
 - PlantRepo
 - SeedRepository
 
-### Service
+### Service:
 - AdminService
 - AdminServiceImpl
 - CustomerService
@@ -44,7 +44,7 @@
 - SeedService
 - SeedServiceImpl
 
-### Model
+### Model:
 - Admin
 - Customer
 - CurrentUserSession
@@ -53,11 +53,11 @@
 - Planter 
 - Seed
 
-### DTO
+### DTO:
 - LoginDTO
 - LogoutDTO
 
-### Exceptions
+### Exceptions:
 - AdminException
 - CustomerException
 - GlobalErrorException
@@ -66,8 +66,8 @@
 - PlanterException
 - PlantException
 - SeedException
-## Teck Stacks:
 
+## Teck Stacks:
 - Java
 - Hibernate
 - SpringBoot
@@ -75,13 +75,13 @@
 - SQL
 - swagger
 - Postman
-##  ER Diagram
 
+##  ER Diagram:
 ![alt text](https://user-images.githubusercontent.com/105915351/201520484-d274a422-21c2-4de0-afb7-d9e192ea6378.jpg)
 ## Team members & contributions:
 [click to see GitHub profile]
 
-1. [Nikhil Chauhan](https://github.com/NLucifer03)
+1. [Nikhil Chauhan](https://github.com/NLucifer03)(Teamlead)
 - AdminController.java
 - CustomerController.java
 - AdminRepository.java
