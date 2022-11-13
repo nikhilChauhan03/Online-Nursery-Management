@@ -91,12 +91,12 @@
 - LogoutDTO.java
 
 2. [Subojit Mukherjee](https://github.com/subo8083)
-- PlanterController.java
-- PlanterRepo.java
-- PlanterService
-- PlanterServiceImpl
-- Planter.java
-- PlanterException
+- PlantController.java
+- PlantRepo.java
+- PlantService
+- PlantServiceImpl
+- Plant.java
+- PlantException
 
 3. [Atabur Rahaman Mollah](https://github.com/Ataburjee)
 - SeedController.java
@@ -115,9 +115,9 @@
 - OrderException.java
 
 5. [Pankaj Sharma](https://github.com/Pankajsharma8221)
-- PlantController.java
-- PlantRepo.java
-- PlantService.java
-- PlantServiceImpl.java
-- Plant.java
-- PlantException.java
+- PlanterController.java
+- PlanterRepo.java
+- PlanterService.java
+- PlanterServiceImpl.java
+- Planter.java
+- PlanterException.java
