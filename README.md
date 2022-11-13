@@ -27,7 +27,7 @@
 - CurrentUserSessionRepository
 - OrderDao
 - PlanterRepo
-- PlanterRepo
+- PlantRepo
 - SeedRepository
 
 ### Service
@@ -64,7 +64,7 @@
 - MyErrorDetails
 - OrderException
 - PlanterException
-- PlanterException
+- PlantException
 - SeedException
 ## Teck Stacks:
 
@@ -81,8 +81,43 @@
 ## Team members & contributions:
 [click to see GitHub profile]
 
-- [Nikhil Chauhan](https://github.com/NLucifer03) - Admin module, Customer module
-- [Subojit Mukherjee](https://github.com/subo8083) - Planter module
-- [Atabur Rahaman Mollah](https://github.com/Ataburjee) - Seed module
-- [Sudarshan Shinde](https://github.com/sudarshan1309) - Order module
-- [Pankaj Sharma](https://github.com/Pankajsharma8221) - Plant module
+1. [Nikhil Chauhan](https://github.com/NLucifer03)
+- AdminController.java
+- CustomerController.java
+- AdminRepository.java
+- CustomerRepository.java
+- CurrentUserSessionRepository.java
+- LoginDTO.java
+- LogoutDTO.java
+
+2. [Subojit Mukherjee](https://github.com/subo8083)
+- PlanterController.java
+- PlanterRepo.java
+- PlanterService
+- PlanterServiceImpl
+- Planter.java
+- PlanterException
+
+3. [Atabur Rahaman Mollah](https://github.com/Ataburjee)
+- SeedController.java
+- SeedRepository.java
+- SeedService.java
+- SeedServiceImpl.java
+- Seed.java
+- SeedException.java
+
+4. [Sudarshan Shinde](https://github.com/sudarshan1309)
+- OrderController.java
+- OrderDao.java
+- OrderService.java
+- OrderServiceImpl.java
+- Order.java
+- OrderException.java
+
+5. [Pankaj Sharma](https://github.com/Pankajsharma8221)
+- PlantController.java
+- PlantRepo.java
+- PlantService.java
+- PlantServiceImpl.java
+- Plant.java
+- PlantException.java
