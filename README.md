@@ -76,14 +76,14 @@
 - Swagger
 - Postman
 
-##  ER Diagram:
-![alt text](https://user-images.githubusercontent.com/105915351/201520484-d274a422-21c2-4de0-afb7-d9e192ea6378.jpg)
-
 ## Class method design:
 ![image](https://user-images.githubusercontent.com/104348363/201666308-6e5b0b4a-2193-4eac-943f-f6cda668431f.png)
 
 ## Class module design:
 ![image](https://user-images.githubusercontent.com/104348363/201664014-a1eb958f-0986-47e0-8c5d-16c760ba5113.png)
+
+##  ER Diagram:
+![alt text](https://user-images.githubusercontent.com/105915351/201520484-d274a422-21c2-4de0-afb7-d9e192ea6378.jpg)
 
 ## Restrictions:
 - Before performing any task the user should be confirmed whether the user is Admin or Customer and for that the user should have logged in.<br/>
