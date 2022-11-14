@@ -83,7 +83,8 @@
 ### For each contoller we need to provide the login details for implementation of particular methods i.e, if the customer wants to purchase some planter then he/she should give his/her correct name during purchasing session and only customer can perform that action and for that One to Many relationship is established.
 ### If we want to add some plants or seeds then only admin can do that so here we have provided the validation i.e during adding a particular item  user should give the correct name of the admin otherwise it will throw an exception and that exception is properly handled.
 
-
+## Class module design:
+![image](https://user-images.githubusercontent.com/104348363/201664014-a1eb958f-0986-47e0-8c5d-16c760ba5113.png)
 
 ## Team members & contributions:
 [click to see GitHub profile]
