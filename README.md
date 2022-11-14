@@ -79,6 +79,9 @@
 ##  ER Diagram:
 ![alt text](https://user-images.githubusercontent.com/105915351/201520484-d274a422-21c2-4de0-afb7-d9e192ea6378.jpg)
 
+## Class method design:
+![image](https://user-images.githubusercontent.com/104348363/201666308-6e5b0b4a-2193-4eac-943f-f6cda668431f.png)
+
 ### Before performing any task the user should be confirmed whether the user is Admin or Customer and for that the user should have logged in.
 ### For each contoller we need to provide the login details for implementation of particular methods i.e, if the customer wants to purchase some planter then he/she should give his/her correct name during purchasing session and only customer can perform that action and for that One to Many relationship is established.
 ### If we want to add some plants or seeds then only admin can do that so here we have provided the validation i.e during adding a particular item  user should give the correct name of the admin otherwise it will throw an exception and that exception is properly handled.
