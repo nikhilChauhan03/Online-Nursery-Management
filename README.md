@@ -71,6 +71,7 @@
 - Java
 - Hibernate
 - SpringBoot
+- REST API
 - Lombok
 - SQL
 - Swagger
