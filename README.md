@@ -10,7 +10,7 @@
 
 ## Acknowledgements:
 
-[FLORA FORT is a online garden store with vast collection of plants, seeds and garden accessories.A one-stop-shop for all gardening related requirements, FLORA FORT has more than 6000 products available online for delivery across India saving you numerous messy trips to various nurseries.We cater to all kinds of gardening needs ranging from plants, pots, tools, to curated plant-scaping solutions. Our ever-growing platform integrates nurseries and customers across India. ]()
+[FLORA FORT is a online garden store with vast collection of plants, seeds and garden accessories.A one-stop-shop for all gardening related requirements, FLORA FORT has more than 6000 products available online for delivery across India saving you numerous messy trips to various nurseries.We cater to all kinds of gardening needs ranging from plants, pots, tools, to curated plant-scaping solutions. Our ever-growing platform integrates nurseries and customers across India. ](https://drive.google.com/file/d/1F8R8e6eU3rrtEPq5xuSFkN33GKvMDMb4/view?usp=sharing)
 ## Functions:
 
 ### Base:
