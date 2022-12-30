@@ -12,21 +12,21 @@ import com.masai.exception.PlanterException;
 import com.masai.model.Plant;
 import com.masai.model.Planter;
 import com.masai.model.Seed;
-import com.masai.repositry.PlantRepo;
-import com.masai.repositry.PlanterRepo;
+import com.masai.repositry.PlantRepository;
+import com.masai.repositry.PlanterRepository;
 import com.masai.repositry.SeedRepository;
 
 @Service
 public class PlanterServiceimpl  implements PlanterService{
 	 @Autowired
-	    private PlanterRepo planterdao; 
+	    private PlanterRepository planterRepository; 
 	    
 	    
 	    @Autowired
-	    private PlantRepo plantRepo;
+	    private PlantRepository plantRepository;
 	    
 	    @Autowired
-	    private SeedRepository seedRepo;
+	    private SeedRepository seedRepository;
 	    
 	    @Autowired
 	    private AdminService adminSerivce;
@@ -37,18 +37,18 @@ public class PlanterServiceimpl  implements PlanterService{
 	        
 	        if(!adminSerivce.validateAdmin(user))throw new AdminException("user is not valid or not logged in");
 	        
-	        Planter savedPlanter = planterdao.save(planter);
+	        Planter savedPlanter = planterRepository.save(planter);
 	        
 	        return savedPlanter;
 	    }
 	    @Override
 	    public Planter updatePlanter(Planter planter,String user) throws PlanterException,AdminException {
 	        if(!adminSerivce.validateAdmin(user))throw new AdminException("user is not valid or not logged in");
-	        Optional<Planter> opt= planterdao.findById(planter.getPlanterId());
+	        Optional<Planter> opt= planterRepository.findById(planter.getPlanterId());
 	        
 	        if(opt.isPresent()) {
 	            
-	            return planterdao.save(planter);    
+	            return planterRepository.save(planter);    
 	        }
 	        
 	        else {
@@ -60,13 +60,13 @@ public class PlanterServiceimpl  implements PlanterService{
 	    @Override
 	    public Planter deletePlanter(Integer planterId,String user) throws PlanterException,AdminException   {
 	        if(!adminSerivce.validateAdmin(user))throw new AdminException("user is not valid or not logged in");
-	        Optional<Planter> opt= planterdao.findById(planterId);
+	        Optional<Planter> opt= planterRepository.findById(planterId);
 	        
 	        if(opt.isPresent()) {
 	            
 	            Planter deletedPlanter = opt.get();
 	            
-	            planterdao.delete(deletedPlanter);
+	            planterRepository.delete(deletedPlanter);
 	            
 	            return deletedPlanter;  
 	        }
@@ -81,7 +81,7 @@ public class PlanterServiceimpl  implements PlanterService{
 	    @Override
 	    public Planter viewPlanter(Integer planterId,String user) throws PlanterException,AdminException,CustomerException {
 	    	if(!(customerService.validateCustomer(user) || adminSerivce.validateAdmin(user)))throw new CustomerException("user is not valid or not logged in");
-	        Optional<Planter> opt= planterdao.findById(planterId);
+	        Optional<Planter> opt= planterRepository.findById(planterId);
 	        
 	        return opt.orElseThrow(() -> new PlanterException("Planter does not exist with Roll :"+ planterId) );
 	    }
@@ -90,7 +90,7 @@ public class PlanterServiceimpl  implements PlanterService{
 	    @Override
 	    public Planter viewPlanter(String planterShape,String user) throws PlanterException,AdminException,CustomerException {
 	    	if(!(customerService.validateCustomer(user) || adminSerivce.validateAdmin(user)))throw new CustomerException("user is not valid or not logged in");
-	        Planter planterObj = planterdao.findByPlanterShape(planterShape);
+	        Planter planterObj = planterRepository.findByPlanterShape(planterShape);
 	        
 	        if(planterObj != null) {
 	            
@@ -105,7 +105,7 @@ public class PlanterServiceimpl  implements PlanterService{
 	    @Override
 	    public List<Planter> viewAllPlanters(String user) throws PlanterException,AdminException,CustomerException {
 	        if(!(customerService.validateCustomer(user) || adminSerivce.validateAdmin(user)))throw new CustomerException("user is not valid or not logged in");
-	        List<Planter> planters = planterdao.findAll();
+	        List<Planter> planters = planterRepository.findAll();
 	        
 	        if(planters.size() > 0) {
 	            return planters;
@@ -118,7 +118,7 @@ public class PlanterServiceimpl  implements PlanterService{
 	    @Override
 	    public List<Planter> viewAllPlanters(Integer minCost, Integer maxCost,String user) throws PlanterException,AdminException,CustomerException {
 	    	 if(!(customerService.validateCustomer(user) || adminSerivce.validateAdmin(user)))throw new CustomerException("user is not valid or not logged in");
-	        List<Planter> planters  = planterdao.findAllByPlanterCostRange(minCost, maxCost);
+	        List<Planter> planters  = planterRepository.findAllByPlanterCostRange(minCost, maxCost);
 	        
 	        if(planters.size() > 0) {
 	            return planters;
@@ -133,11 +133,11 @@ public class PlanterServiceimpl  implements PlanterService{
 	    @Override
 	    public Planter registerPlanter(Integer planterId,Integer plantId, Integer seedId,String user) throws PlanterException,AdminException{
 	        if(!adminSerivce.validateAdmin(user))throw new AdminException("user is not valid or not logged in");
-	        Plant plant = plantRepo.findById(plantId).orElseThrow(() -> new PlanterException("Invalid plnatId"));
+	        Plant plant = plantRepository.findById(plantId).orElseThrow(() -> new PlanterException("Invalid plnatId"));
 	        
-	        Seed seed = seedRepo.findById(seedId).orElseThrow(() -> new PlanterException("Invalid seedId"));
+	        Seed seed = seedRepository.findById(seedId).orElseThrow(() -> new PlanterException("Invalid seedId"));
 	        
-	        Planter planter = planterdao.findById(planterId).orElseThrow(() -> new PlanterException("Invalid plnaterId"));
+	        Planter planter = planterRepository.findById(planterId).orElseThrow(() -> new PlanterException("Invalid plnaterId"));
 	        
 	        planter.getPlants().add(plant);
 	        plant.setPlanter(planter);
@@ -146,7 +146,7 @@ public class PlanterServiceimpl  implements PlanterService{
 	        planter.getSeeds().add(seed);
 	        seed.setPlanter(planter);
 	    
-	        return planterdao.save(planter);
+	        return planterRepository.save(planter);
 	        
 	        
 	        

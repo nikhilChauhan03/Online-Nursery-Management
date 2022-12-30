@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.masai.model.CurrentUserSession;
 @Repository
-public interface CurrentUserSessionRepositry extends JpaRepository<CurrentUserSession, String>{
+public interface CurrentUserSessionRepository extends JpaRepository<CurrentUserSession, String>{
 
 	public CurrentUserSession findByUserName(String string);
 	

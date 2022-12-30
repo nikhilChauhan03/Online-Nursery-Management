@@ -14,9 +14,9 @@ import com.masai.exception.CustomerException;
 import com.masai.model.Admin;
 import com.masai.model.CurrentUserSession;
 import com.masai.model.Customer;
-import com.masai.repositry.AdminRepositry;
-import com.masai.repositry.CurrentUserSessionRepositry;
-import com.masai.repositry.CustomerRepositry;
+import com.masai.repositry.AdminRepository;
+import com.masai.repositry.CurrentUserSessionRepository;
+import com.masai.repositry.CustomerRepository;
 
 import lombok.val;
 import net.bytebuddy.utility.RandomString;
@@ -26,15 +26,15 @@ public class AdminServiceImpl implements AdminService{
 
 // 	----------- admin Repository Variable-----------
 	@Autowired
-	AdminRepositry adminRepositry;
+	AdminRepository adminRepositry;
 	
 //	----------- CurrentSessionRepository variable-----------
 	@Autowired
-	CurrentUserSessionRepositry currentUserSessionRepo;
+	CurrentUserSessionRepository currentUserSessionRepo;
 	
 // 	----------- Customer Repository Variable-----------
 	@Autowired
-	CustomerRepositry customerRepositry;
+	CustomerRepository customerRepositry;
 	
 	
 	

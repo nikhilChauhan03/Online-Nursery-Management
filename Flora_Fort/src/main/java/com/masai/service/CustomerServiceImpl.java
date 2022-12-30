@@ -10,8 +10,8 @@ import com.masai.DTO.LogoutDTO;
 import com.masai.exception.CustomerException;
 import com.masai.model.CurrentUserSession;
 import com.masai.model.Customer;
-import com.masai.repositry.CurrentUserSessionRepositry;
-import com.masai.repositry.CustomerRepositry;
+import com.masai.repositry.CurrentUserSessionRepository;
+import com.masai.repositry.CustomerRepository;
 
 import net.bytebuddy.utility.RandomString;
 
@@ -20,11 +20,11 @@ public class CustomerServiceImpl implements CustomerService{
 
 // 	----------- Customer Repository Variable-----------
 	@Autowired
-	CustomerRepositry customerRepositry;
+	CustomerRepository customerRepositry;
 	
 //	----------- CurrentSessionRepository variable-----------
 	@Autowired
-	CurrentUserSessionRepositry currentUserSessionRepo;
+	CurrentUserSessionRepository currentUserSessionRepo;
 
 	
 //	-------------------------------------- adding customer--------------------------------------------------

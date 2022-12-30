@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.masai.model.Planter;
 
 @Repository
-public interface PlanterRepo  extends JpaRepository<Planter, Integer>{
+public interface PlanterRepository  extends JpaRepository<Planter, Integer>{
 
 	
 

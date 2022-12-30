@@ -18,7 +18,7 @@ import com.masai.repositry.SeedRepository;
 public class SeedServiceImpl implements SeedService{
 
     @Autowired
-    private SeedRepository sRepo;
+    private SeedRepository seedRepositry;
     
     @Autowired
     private AdminService adminService;
@@ -33,17 +33,17 @@ public class SeedServiceImpl implements SeedService{
         
         if(!adminService.validateAdmin(user)) throw new AdminException("user is not valid...!");
         
-        return sRepo.save(seed);
+        return seedRepositry.save(seed);
     }
     @Override
     public Seed updateSeed(Seed seed, String user)throws SeedException, AdminException {
         
         if(!adminService.validateAdmin(user)) throw new AdminException("user is not valid...!");
         
-        Optional<Seed> s = sRepo.findById(seed.getSeedId());
+        Optional<Seed> s = seedRepositry.findById(seed.getSeedId());
         
         if(s.isPresent())
-            return sRepo.save(seed);
+            return seedRepositry.save(seed);
         else
             throw new SeedException("No seed exist with the Id : "+seed.getSeedId());
         
@@ -51,11 +51,11 @@ public class SeedServiceImpl implements SeedService{
     @Override
     public Seed deleteSeed(Integer seedId, String user)throws SeedException, AdminException{
         if(!adminService.validateAdmin(user)) throw new AdminException("user is not valid...!");
-        Optional<Seed> s = sRepo.findById(seedId);
+        Optional<Seed> s = seedRepositry.findById(seedId);
         
         if(s.isPresent()) {
             Seed deletedSeed = s.get();
-            sRepo.delete(deletedSeed);
+            seedRepositry.delete(deletedSeed);
             return deletedSeed;
         }
         else
@@ -66,7 +66,7 @@ public class SeedServiceImpl implements SeedService{
         
         if(adminService.validateAdmin(user) || customerService.validateCustomer(user))
         {
-        	 Optional<Seed> s = sRepo.findById(seedId);
+        	 Optional<Seed> s = seedRepositry.findById(seedId);
              
              return s.orElseThrow( () -> new SeedException("No seed exist with the Id : "+seedId));
         }
@@ -82,7 +82,7 @@ public class SeedServiceImpl implements SeedService{
         
         List<Seed> l = new ArrayList<>();
         boolean b = false;
-        List<Seed> list = sRepo.findAll();
+        List<Seed> list = seedRepositry.findAll();
         for(Seed s:list) {
             if(s.getCommonName().equals(commonName)) {
                 l.add(s);
@@ -104,7 +104,7 @@ public class SeedServiceImpl implements SeedService{
             throw new AdminException("user is not valid...!");
         
         
-        List<Seed> list = sRepo.findAll();
+        List<Seed> list = seedRepositry.findAll();
         if(list != null)
             return list;
         else
@@ -117,7 +117,7 @@ public class SeedServiceImpl implements SeedService{
             throw new AdminException("user is not valid...!");
         
         List<Seed> l = new ArrayList<>();
-        List<Seed> list = sRepo.findAll();
+        List<Seed> list = seedRepositry.findAll();
         for(Seed s:list) {
             if(s.getTypeOFSeeds().equals(typeOfSeed)) {
                 l.add(s);
