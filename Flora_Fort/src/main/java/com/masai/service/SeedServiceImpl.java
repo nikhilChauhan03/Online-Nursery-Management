@@ -17,6 +17,12 @@ import com.masai.repositry.SeedRepository;
 @Service
 public class SeedServiceImpl implements SeedService{
 
+//	we need to supply user name for authentication for every user :--------------
+	
+	
+//	take seed repositry, admin service, customer service instance variable so that we can validate customer and admin :-----------
+	
+	
     @Autowired
     private SeedRepository seedRepositry;
     
@@ -27,6 +33,7 @@ public class SeedServiceImpl implements SeedService{
     private CustomerService customerService;
     
     
+//   adding seed to the database :--------------------------------------
     
     @Override
     public Seed addSeed(Seed seed, String user) throws SeedException, AdminException {
@@ -35,44 +42,57 @@ public class SeedServiceImpl implements SeedService{
         
         return seedRepositry.save(seed);
     }
+    
+//    updatin seed by taking seed from request body :---------------------------------
+    
     @Override
     public Seed updateSeed(Seed seed, String user)throws SeedException, AdminException {
         
         if(!adminService.validateAdmin(user)) throw new AdminException("user is not valid...!");
         
-        Optional<Seed> s = seedRepositry.findById(seed.getSeedId());
+        Optional<Seed> optinalSeed = seedRepositry.findById(seed.getSeedId());
         
-        if(s.isPresent())
+        if(optinalSeed.isPresent())
             return seedRepositry.save(seed);
         else
             throw new SeedException("No seed exist with the Id : "+seed.getSeedId());
         
     }
+    
+//    deleting seed by seed id :--------------------------
+    
     @Override
     public Seed deleteSeed(Integer seedId, String user)throws SeedException, AdminException{
         if(!adminService.validateAdmin(user)) throw new AdminException("user is not valid...!");
-        Optional<Seed> s = seedRepositry.findById(seedId);
+        Optional<Seed> optinalSeed = seedRepositry.findById(seedId);
         
-        if(s.isPresent()) {
-            Seed deletedSeed = s.get();
+        if(optinalSeed.isPresent()) {
+            Seed deletedSeed = optinalSeed.get();
             seedRepositry.delete(deletedSeed);
             return deletedSeed;
         }
         else
             throw new SeedException("No seed exist with the Id : "+seedId);
     }
+    
+    
+//    view perticular seed by seed id :---------------------
+    
     @Override
     public Seed viewSeed(Integer seedId, String user)throws AdminException, CustomerException, SeedException{
         
         if(adminService.validateAdmin(user) || customerService.validateCustomer(user))
         {
-        	 Optional<Seed> s = seedRepositry.findById(seedId);
+        	 Optional<Seed> optinalSeed = seedRepositry.findById(seedId);
              
-             return s.orElseThrow( () -> new SeedException("No seed exist with the Id : "+seedId));
+             return optinalSeed.orElseThrow( () -> new SeedException("No seed exist with the Id : "+seedId));
         }
         throw new AdminException("user is not valid...!");
    
     }
+    
+    
+//    view all seed by common name of the seed :-----------------
     
     @Override
     public List<Seed> viewSeed(String commonName, String user)throws SeedException, AdminException, CustomerException{
@@ -80,23 +100,26 @@ public class SeedServiceImpl implements SeedService{
             throw new AdminException("user is not valid...!");
         
         
-        List<Seed> l = new ArrayList<>();
-        boolean b = false;
+        List<Seed> seeds = new ArrayList<>();
+        boolean check = false;
         List<Seed> list = seedRepositry.findAll();
-        for(Seed s:list) {
-            if(s.getCommonName().equals(commonName)) {
-                l.add(s);
-                b=true;
+        for(Seed seed:list) {
+            if(seed.getCommonName().equals(commonName)) {
+            	seeds.add(seed);
+                check=true;
                 break;
             }
         }
         
-        if(b)
-            return l;
+        if(check)
+            return seeds;
         else
             throw new SeedException("No seed exist with the Id : "+commonName);
         
     }
+    
+//    view all seed if user is authenticated :----------------------------
+    
     @Override
     public List<Seed> viewAllSeeds(String user)throws SeedException, AdminException, CustomerException{
         
@@ -104,26 +127,29 @@ public class SeedServiceImpl implements SeedService{
             throw new AdminException("user is not valid...!");
         
         
-        List<Seed> list = seedRepositry.findAll();
-        if(list != null)
-            return list;
+        List<Seed> seeds = seedRepositry.findAll();
+        if(seeds != null)
+            return seeds;
         else
-            throw new SeedException("no seed found...!");
+            throw new SeedException("Seeds not avaialbe this time...!");
     }
+    
+//    view all seeds of perticular type by entering some specifinc type of seeds :-------------------
+    
     @Override
     public List<Seed> viewAllSeeds(String typeOfSeed,String user)throws SeedException, AdminException, CustomerException{
         
     	 if(!(adminService.validateAdmin(user) || customerService.validateCustomer(user)))
             throw new AdminException("user is not valid...!");
         
-        List<Seed> l = new ArrayList<>();
-        List<Seed> list = seedRepositry.findAll();
-        for(Seed s:list) {
-            if(s.getTypeOFSeeds().equals(typeOfSeed)) {
-                l.add(s);
+        List<Seed> seeds = new ArrayList<>();
+        List<Seed> availableSeeds = seedRepositry.findAll();
+        for(Seed seed:availableSeeds) {
+            if(seed.getTypeOFSeeds().equals(typeOfSeed)) {
+                seeds.add(seed);
             }
         }
-        return l;
+        return seeds;
     }
 
 }
