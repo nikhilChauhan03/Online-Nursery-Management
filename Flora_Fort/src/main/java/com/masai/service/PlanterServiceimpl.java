@@ -18,9 +18,21 @@ import com.masai.repositry.SeedRepository;
 
 @Service
 public class PlanterServiceimpl  implements PlanterService{
-	 @Autowired
+	
+//	IN EVERY METHOD WE NEED TO PROVIDE USERNAME TO AUTHENTICATE THE USER-------
+	
+/*
+ * 		Planter repository : we need to take insert update delete and get the planter object
+ * 		Plant repository : we need to add plant to the planter and vice versa
+ * 		Seed repository : we need to add seed to the planter and vice versa
+ * 		Admin repository : authenticate admin
+ * 		Customer repository : authenticate cutomer.
+ */
+	
+	
+	
+		@Autowired
 	    private PlanterRepository planterRepository; 
-	    
 	    
 	    @Autowired
 	    private PlantRepository plantRepository;
@@ -30,8 +42,13 @@ public class PlanterServiceimpl  implements PlanterService{
 	    
 	    @Autowired
 	    private AdminService adminSerivce;
+	    
 	    @Autowired
 	    private CustomerService customerService;
+	    
+	    
+//	    registering planter into the database. we need to provide the planter object by request body :----------------
+	    
 	    @Override
 	    public Planter addPlanter(Planter planter,String user) throws AdminException {
 	        
@@ -40,72 +57,99 @@ public class PlanterServiceimpl  implements PlanterService{
 	        Planter savedPlanter = planterRepository.save(planter);
 	        
 	        return savedPlanter;
+	        
 	    }
+	    
+	    
+//	    updating the planter by planter object from request body : ----------------------------------------------------------
+	    
 	    @Override
 	    public Planter updatePlanter(Planter planter,String user) throws PlanterException,AdminException {
+	    	
 	        if(!adminSerivce.validateAdmin(user))throw new AdminException("user is not valid or not logged in");
-	        Optional<Planter> opt= planterRepository.findById(planter.getPlanterId());
+	        Optional<Planter> optionalPlanter= planterRepository.findById(planter.getPlanterId());
 	        
-	        if(opt.isPresent()) {
+	        if(optionalPlanter.isPresent()) {
 	            
 	            return planterRepository.save(planter);    
 	        }
-	        
 	        else {
 	            
 	            throw new PlanterException("Planter could not be Updated. Invalid Planter Details provided");
 	        }
 	        
 	    }
+	    
+	    
+//	    deleting the planter by providing the plant id from request params :---------------------------------------------------
+	    
 	    @Override
 	    public Planter deletePlanter(Integer planterId,String user) throws PlanterException,AdminException   {
+	    	
 	        if(!adminSerivce.validateAdmin(user))throw new AdminException("user is not valid or not logged in");
-	        Optional<Planter> opt= planterRepository.findById(planterId);
+	        Optional<Planter> optionalPlanter= planterRepository.findById(planterId);
 	        
-	        if(opt.isPresent()) {
+	        if(optionalPlanter.isPresent()) {
 	            
-	            Planter deletedPlanter = opt.get();
-	            
+	            Planter deletedPlanter = optionalPlanter.get();
 	            planterRepository.delete(deletedPlanter);
-	            
 	            return deletedPlanter;  
-	        }
-	        
-	        else {
 	            
+	        }   
+	        else {
 	            throw new PlanterException("Planter could not be Deleted. Invalid Planter Details ");
 	        }
 	        
-	        
 	    }
+	    
+	    
+	    
+//	    ------------------------------------get perticular planter object by planter id :----------------------------------------------------------
+	    
 	    @Override
 	    public Planter viewPlanter(Integer planterId,String user) throws PlanterException,AdminException,CustomerException {
-	    	if(!(customerService.validateCustomer(user) || adminSerivce.validateAdmin(user)))throw new CustomerException("user is not valid or not logged in");
+	    	
+	    	if(!(customerService.validateCustomer(user) || adminSerivce.validateAdmin(user)))
+	    		throw new CustomerException("user is not valid or not logged in");
+	    	
 	        Optional<Planter> opt= planterRepository.findById(planterId);
 	        
 	        return opt.orElseThrow(() -> new PlanterException("Planter does not exist with Roll :"+ planterId) );
+	        
 	    }
 	    
 	    
+	    
+//	  -------------------------------get perticular planter object by specify the planter shape ;----------------------------------------------------------
+	    
 	    @Override
 	    public Planter viewPlanter(String planterShape,String user) throws PlanterException,AdminException,CustomerException {
-	    	if(!(customerService.validateCustomer(user) || adminSerivce.validateAdmin(user)))throw new CustomerException("user is not valid or not logged in");
+	    	
+	    	if(!(customerService.validateCustomer(user) || adminSerivce.validateAdmin(user)))
+	    		throw new CustomerException("user is not valid or not logged in");
+	    	
 	        Planter planterObj = planterRepository.findByPlanterShape(planterShape);
 	        
 	        if(planterObj != null) {
-	            
 	            return planterObj; 
 	        }
-	        
 	        else {
 	            throw new PlanterException("Planter does not exist with planterShape :"+ planterShape);
 	        }
 	        
 	    }
+	    
+	    
+	    
+//	    ---------------------------------view all available plants if user is authenticated :----------------------------------------------------
+	    
 	    @Override
 	    public List<Planter> viewAllPlanters(String user) throws PlanterException,AdminException,CustomerException {
-	        if(!(customerService.validateCustomer(user) || adminSerivce.validateAdmin(user)))throw new CustomerException("user is not valid or not logged in");
-	        List<Planter> planters = planterRepository.findAll();
+	        
+	    	if(!(customerService.validateCustomer(user) || adminSerivce.validateAdmin(user)))
+	    		throw new CustomerException("user is not valid or not logged in");
+	        
+	    	List<Planter> planters = planterRepository.findAll();
 	        
 	        if(planters.size() > 0) {
 	            return planters;
@@ -115,9 +159,17 @@ public class PlanterServiceimpl  implements PlanterService{
 	        }
 	        
 	    }
+	    
+	    
+	    
+//	    --------------------view all planter between spcific range by deciding mincost and maximum cost of the planter :-------
+	    
 	    @Override
 	    public List<Planter> viewAllPlanters(Integer minCost, Integer maxCost,String user) throws PlanterException,AdminException,CustomerException {
-	    	 if(!(customerService.validateCustomer(user) || adminSerivce.validateAdmin(user)))throw new CustomerException("user is not valid or not logged in");
+	    	 
+	    	if(!(customerService.validateCustomer(user) || adminSerivce.validateAdmin(user)))
+	    		throw new CustomerException("user is not valid or not logged in");
+	    	
 	        List<Planter> planters  = planterRepository.findAllByPlanterCostRange(minCost, maxCost);
 	        
 	        if(planters.size() > 0) {
@@ -128,11 +180,16 @@ public class PlanterServiceimpl  implements PlanterService{
 	        }
 	        
 	    }
-	//  --------------------------------register planter with plant and seed ------------------------------------
+	    
+	    
+	    
+	    
+	//  ----------------------------------------register planter with plant and seed ---------------------------------------------------------
 	    
 	    @Override
 	    public Planter registerPlanter(Integer planterId,Integer plantId, Integer seedId,String user) throws PlanterException,AdminException{
-	        if(!adminSerivce.validateAdmin(user))throw new AdminException("user is not valid or not logged in");
+	        
+	    	if(!adminSerivce.validateAdmin(user))throw new AdminException("user is not valid or not logged in");
 	        Plant plant = plantRepository.findById(plantId).orElseThrow(() -> new PlanterException("Invalid plnatId"));
 	        
 	        Seed seed = seedRepository.findById(seedId).orElseThrow(() -> new PlanterException("Invalid seedId"));

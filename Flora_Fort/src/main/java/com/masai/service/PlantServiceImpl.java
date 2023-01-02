@@ -15,6 +15,15 @@ import com.masai.repositry.PlantRepository;
 @Service
 public class PlantServiceImpl implements PlantService {
 
+//	IN EVERY METHOD WE NEED TO PROVIDE USERNAME TO AUTHENTICATE THE USER-------
+	
+	/* 	
+	 * 	Plant repository : perfrom DML operations on the plant table.
+	 * Admin repository : authenticate admin
+	 * 	Customer repository : authenticate cutomer.
+	 */
+	
+	
 	@Autowired
 	private PlantRepository plantRepository;
 	
@@ -24,7 +33,6 @@ public class PlantServiceImpl implements PlantService {
 	@Autowired
 	private CustomerService customerService;
 	
-//	-------------IN EVERY METHOD WE NEED TO PROVIDE USERNAME TO AUTHENTICATE THE USER---------------------
 	
 //	-------------------------------------registering plant into database-----------------------------------
 	
@@ -47,6 +55,7 @@ public class PlantServiceImpl implements PlantService {
 		if(!adminSerivce.validateAdmin(user))throw new AdminException("user is not valid or not logged in");
 		
 		Optional<Plant>opt=plantRepository.findById(plant.getPlantId());
+		
 		if(opt.isPresent())
 		{
 			Plant update=plantRepository.save(plant);
@@ -57,17 +66,23 @@ public class PlantServiceImpl implements PlantService {
 		
 	}
 
+	
+	
 //	------------------------------------------------delete plant id by plant id and user name to authenticate---------------------------------
 
 	@Override
 	public Plant deletePlantById(Integer id, String str) throws PlantException, AdminException {
 		
 		if(!adminSerivce.validateAdmin(str))throw new AdminException("user is not valid or not logged in");
+		
 		Optional<Plant>opt=plantRepository.findById(id);
+		
 		if(opt.isPresent()) {
+			
 			Plant existing=opt.get();
 			plantRepository.delete(existing);
 			return existing;
+			
 		}
 		else
 			throw new PlantException("No such plant with id "+id);
@@ -75,6 +90,8 @@ public class PlantServiceImpl implements PlantService {
 		
 	}
 
+	
+	
 //----------------------------------------------getting plant by plant id and user name----------------------------------------------
 	
 	@Override
@@ -95,6 +112,9 @@ public class PlantServiceImpl implements PlantService {
 		
 	}
 
+	
+	
+	
 // -----------------------------------------------getting plant by common name of plant-----------------------------------------------
 	
 	@Override
@@ -109,4 +129,7 @@ public class PlantServiceImpl implements PlantService {
 
 		return plants;
 	}
+	
+	
+	
 }
