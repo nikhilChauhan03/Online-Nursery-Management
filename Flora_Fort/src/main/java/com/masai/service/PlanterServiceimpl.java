@@ -22,7 +22,7 @@ public class PlanterServiceimpl  implements PlanterService{
 //	IN EVERY METHOD WE NEED TO PROVIDE USERNAME TO AUTHENTICATE THE USER-------
 	
 /*
- * 		Planter repository : we need to take insert update delete and get the planter object
+ * 		Planter repository : we need to  insert, update, delete and get the planter object
  * 		Plant repository : we need to add plant to the planter and vice versa
  * 		Seed repository : we need to add seed to the planter and vice versa
  * 		Admin repository : authenticate admin
@@ -165,7 +165,8 @@ public class PlanterServiceimpl  implements PlanterService{
 //	    --------------------view all planter between spcific range by deciding mincost and maximum cost of the planter :-------
 	    
 	    @Override
-	    public List<Planter> viewAllPlanters(Integer minCost, Integer maxCost,String user) throws PlanterException,AdminException,CustomerException {
+	    public List<Planter> viewAllPlanters(Integer minCost, Integer maxCost,String user) 
+	    		throws PlanterException,AdminException,CustomerException {
 	    	 
 	    	if(!(customerService.validateCustomer(user) || adminSerivce.validateAdmin(user)))
 	    		throw new CustomerException("user is not valid or not logged in");
