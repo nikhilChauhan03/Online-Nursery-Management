@@ -22,12 +22,12 @@ public class GlobalErrorExceptionHandler {
 //	------------------------------------ Customer Exception handler ---------------------------------------------------
 	
 	@ExceptionHandler(CustomerException.class)
-	public ResponseEntity<MyErrorDetails> CustomerExceptionHandler(CustomerException ce, WebRequest rq)
+	public ResponseEntity<MyErrorDetails> customerExceptionHandler(CustomerException exception, WebRequest webRequest)
 	{
 		
-		MyErrorDetails md = new MyErrorDetails(LocalDateTime.now(), ce.getMessage(), rq.getDescription(false));
+		MyErrorDetails error = new MyErrorDetails(LocalDateTime.now(), exception.getMessage(), webRequest.getDescription(false));
 		
-		return new ResponseEntity<MyErrorDetails>(md,HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<MyErrorDetails>(error,HttpStatus.BAD_REQUEST);
 		
 	}
 	
@@ -35,12 +35,12 @@ public class GlobalErrorExceptionHandler {
 //	--------------------------------------------admin Exception handler -----------------------------------------------
 	
 	@ExceptionHandler(AdminException.class)
-	public ResponseEntity<MyErrorDetails> AdminExceptionHandler(AdminException ce, WebRequest rq)
+	public ResponseEntity<MyErrorDetails> adminExceptionHandler(AdminException exception, WebRequest webRequest)
 	{
 		
-		MyErrorDetails md = new MyErrorDetails(LocalDateTime.now(), ce.getMessage(), rq.getDescription(false));
+		MyErrorDetails error = new MyErrorDetails(LocalDateTime.now(), exception.getMessage(), webRequest.getDescription(false));
 		
-		return new ResponseEntity<MyErrorDetails>(md,HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<MyErrorDetails>(error,HttpStatus.BAD_REQUEST);
 		
 	}
 	
@@ -48,55 +48,66 @@ public class GlobalErrorExceptionHandler {
 	
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<MyErrorDetails> methodArgumentNotValidHandler(MethodArgumentNotValidException ce)
+	public ResponseEntity<MyErrorDetails> methodArgumentNotValidHandler(MethodArgumentNotValidException exception)
 	{
 
-		MyErrorDetails md = new MyErrorDetails(LocalDateTime.now(), "validation error", ce.getBindingResult().getFieldError().getDefaultMessage());
+		MyErrorDetails error = new MyErrorDetails(LocalDateTime.now(), "validation error", exception.getBindingResult().getFieldError().getDefaultMessage());
 		
-		return new ResponseEntity<MyErrorDetails>(md,HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<MyErrorDetails>(error,HttpStatus.BAD_REQUEST);
 	}
 	
 	
 //	--------------------------------------------------global exception handler-----------------------------------------------
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<MyErrorDetails> myExceptionHandler(Exception ce, WebRequest rq)
+	public ResponseEntity<MyErrorDetails> myExceptionHandler(Exception exception, WebRequest webRequest)
 	{
 		
-		MyErrorDetails md = new MyErrorDetails(LocalDateTime.now(), ce.getMessage(), rq.getDescription(false));
+		MyErrorDetails error = new MyErrorDetails(LocalDateTime.now(), exception.getMessage(), webRequest.getDescription(false));
 		
-		return new ResponseEntity<MyErrorDetails>(md,HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<MyErrorDetails>(error,HttpStatus.BAD_REQUEST);
 		
 	}
 	
 	
+//	----------------------------------------------------------plant Exception handler----------------------------------------------------
 	@ExceptionHandler(PlantException.class)
-	public ResponseEntity<MyErrorDetails>plantExceptionHandler(PlantException ce, WebRequest req){
+	public ResponseEntity<MyErrorDetails>plantExceptionHandler(PlantException exception, WebRequest webRequest){
 		
-		MyErrorDetails err=new MyErrorDetails(LocalDateTime.now(), ce.getMessage(), req.getDescription(false));
-		return new ResponseEntity<MyErrorDetails>(err,HttpStatus.BAD_REQUEST);
+		MyErrorDetails error=new MyErrorDetails(LocalDateTime.now(), exception.getMessage(), webRequest.getDescription(false));
+		return new ResponseEntity<MyErrorDetails>(error,HttpStatus.BAD_REQUEST);
 		
 	}
 	
 	
+//		----------------------------------------------------------planter Exception handler----------------------------------------------------
 	@ExceptionHandler(PlanterException.class)
-	public ResponseEntity<MyErrorDetails> plantExceptionHandler(PlanterException se,WebRequest req){
+	public ResponseEntity<MyErrorDetails> planterExceptionHandler(PlanterException exception,WebRequest webRequest){
 		
-		MyErrorDetails err = new MyErrorDetails(LocalDateTime.now(),se.getMessage(),req.getDescription(false));
+		MyErrorDetails error = new MyErrorDetails(LocalDateTime.now(),exception.getMessage(),webRequest.getDescription(false));
 		
-		return new ResponseEntity<MyErrorDetails>(err,HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<MyErrorDetails>(error,HttpStatus.BAD_REQUEST);
 	}
 	
-
+	
+// ------------------------------------------------------------------Nohandlerfound Exception----------------------------------------------------
 	@ExceptionHandler(NoHandlerFoundException.class)
-	public ResponseEntity<MyErrorDetails> notFoundExceptionHandler(NoHandlerFoundException nfe, WebRequest req ){
+	public ResponseEntity<MyErrorDetails> notFoundExceptionHandler(NoHandlerFoundException exception, WebRequest webRequest ){
 		
-		MyErrorDetails err = new MyErrorDetails(LocalDateTime.now(),nfe.getMessage(),req.getDescription(false));
-		
-		
-		return new ResponseEntity<MyErrorDetails>(err, HttpStatus.BAD_REQUEST);
+		MyErrorDetails error = new MyErrorDetails(LocalDateTime.now(),exception.getMessage(),webRequest.getDescription(false));
+
+		return new ResponseEntity<MyErrorDetails>(error, HttpStatus.BAD_REQUEST);
+
 	}
 	
+//	---------------------------------------------------------------OrderException Handler--------------------------------------------------------------
 
-	
+	@ExceptionHandler(OrderException.class)
+	public ResponseEntity<MyErrorDetails> ordreExceptionHandler(OrderException exception, WebRequest webRequest ){
+		
+		MyErrorDetails error = new MyErrorDetails(LocalDateTime.now(),exception.getMessage(),webRequest.getDescription(false));
+
+		return new ResponseEntity<MyErrorDetails>(error, HttpStatus.BAD_REQUEST);
+
+	}
 	
 }

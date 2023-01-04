@@ -31,10 +31,13 @@ public class CustomerServiceImpl implements CustomerService{
 	
 	@Override
 	public Customer addCustomer(Customer customer) throws CustomerException {
+		
 		if(customer.getCustomerId() != null) throw new CustomerException("customer Id is not required");
 		Customer addcustomer = customerRepositry.save(customer);
+		
 		if(addcustomer == null) throw new CustomerException("Failed to Register Customer");
 		System.out.print(customer.toString());
+		
 		return addcustomer;
 		
 	}
@@ -49,7 +52,7 @@ public class CustomerServiceImpl implements CustomerService{
 									.orElseThrow(() -> new CustomerException("Invalid customer details. Please provide the valid details. Customer Id is not vlaid"));
 		
 		CurrentUserSession checkCustomer = currentUserSessionRepo.findByUserName(existingCustomer.getUserName());
-		System.out.println(checkCustomer);
+		 
 		if(checkCustomer == null) throw new CustomerException("Please Provide valid details Invalid Customer userName or First try to Login");
 
 		return customerRepositry.save(tenant);

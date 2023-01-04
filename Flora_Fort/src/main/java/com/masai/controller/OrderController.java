@@ -27,35 +27,49 @@ public class OrderController {
 
 	@PostMapping("/orders/{customer_userName}/{planterId}/{customerId}")
 	ResponseEntity<Orders> creatorderhandler(@PathVariable Integer customerId, @PathVariable String customer_userName,@PathVariable Integer planterId, @RequestBody Orders order) throws OrderException, CustomerException {
+		
 		Orders neworder = orderservice.addOrder(order,planterId,customerId,customer_userName);
 		return new ResponseEntity<>(neworder, HttpStatus.CREATED);
 
 	}
 
+	
 	@PutMapping("/orders/{customer_userName}")
 	ResponseEntity<Orders> UpdateOrderHandler(@RequestBody Orders order,@PathVariable String customer_userName) throws OrderException, CustomerException {
+		
 		Orders updateorder = orderservice.updateOrder(order,customer_userName);
 		return new ResponseEntity<Orders>(updateorder, HttpStatus.OK);
+	
 	}
 
+	
 	@DeleteMapping("/orders/{customer_userName}/{BookingOrderId}")
 	ResponseEntity<Orders> deleteOrderHandler(@PathVariable("BookingOrderId") Integer BookingOrderId,@PathVariable String customer_userName)
 			throws OrderException, CustomerException {
+		
 		Orders orderdeleted = orderservice.deleteOrder(BookingOrderId,customer_userName);
 		return new ResponseEntity<Orders>(orderdeleted, HttpStatus.OK);
+	
 	}
 
+	
 	@GetMapping("/orders/{customer_userName}/{BookingOrderId}")
 	ResponseEntity<Orders> viewOrderHandler(@PathVariable("BookingOrderId") Integer BookingOrderId,@PathVariable String customer_userName)
 			throws OrderException, CustomerException, AdminException {
+		
 		Orders vieworder = orderservice.viewOrder(BookingOrderId,customer_userName);
 		return new ResponseEntity<Orders>(vieworder, HttpStatus.OK);
+	
 	}
 
+	
 	@GetMapping("/orders/{customer_userName}")
 	ResponseEntity<List <Orders>> viewAllOrderHandler(@PathVariable String customer_userName)throws OrderException, CustomerException, AdminException{
+		
 		List<Orders> Allorders= orderservice.viewAllOrder(customer_userName);
 		return new ResponseEntity<List <Orders>>(Allorders, HttpStatus.OK);
+	
 	}
+	
 
 }

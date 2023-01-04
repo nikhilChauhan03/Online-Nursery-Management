@@ -8,9 +8,7 @@ import com.masai.model.Plant;
 
 @Repository
 public interface PlantRepository extends JpaRepository<Plant, Integer>{
-	
-	
-	public  Plant findByCommonName(String cname);
-	//public List<Plant> findBytypeOfPlant(String type);
 
+	public  Plant findByCommonName(String cname);
+	 
 }

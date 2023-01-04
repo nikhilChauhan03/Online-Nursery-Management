@@ -10,9 +10,7 @@ import com.masai.model.Planter;
 
 @Repository
 public interface PlanterRepository  extends JpaRepository<Planter, Integer>{
-
 	
-
 	@Query("select p from Planter p where p.planterShape =?1 ")
 	Planter findByPlanterShape(String planterShape);
 

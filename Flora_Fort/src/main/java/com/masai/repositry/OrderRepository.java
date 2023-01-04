@@ -5,10 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.masai.model.Orders;
 
-
 @Repository
 public interface OrderRepository extends JpaRepository<Orders, Integer> {
 
-	
-	
 }

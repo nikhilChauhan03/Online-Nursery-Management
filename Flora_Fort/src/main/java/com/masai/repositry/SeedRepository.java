@@ -9,22 +9,5 @@ import com.masai.model.Seed;
 public interface SeedRepository extends JpaRepository<Seed, Integer>{
 
 	public Seed findByCommonName(String commonName);
-	
-	
-	//public Seed addSeedHandler(Seed seed);
-	
-//	public Seed updateSeed(Seed seed);
-//	
-//	public Seed deleteSeed(Seed seed);
-//	
-//	public Seed viewSeed(int seedId);
-//	
-//	public Seed viewSeed(String commonName);
-//	
-//	public List<Seed> viewAllSeeds();
-//	
-//	public List<Seed> viewAllSeeds(String typeOfSeed);
-//	
-//	public List<Seed> findByTypeOfSeed(String typeOfSeed);
-//	
+ 
 }
