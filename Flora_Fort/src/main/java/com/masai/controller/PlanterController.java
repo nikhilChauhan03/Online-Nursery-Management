@@ -30,68 +30,101 @@ public class PlanterController {
 	@Autowired
 	private PlanterService planterService;
 
+
+//	---------------------------------------------------------viewPerticularPlanter Handler---------------------------------------------------------------
+	
 	@GetMapping("/planters/{userName}/{planterId}")
 	public ResponseEntity<Planter> viewPlanterHandler(@Valid @PathVariable Integer planterId,
 			@PathVariable("user") String userName) throws PlanterException, AdminException, CustomerException {
-
+		
 		Planter obtainedPlanter = planterService.viewPlanter(planterId, userName);
-
 		return new ResponseEntity<Planter>(obtainedPlanter, HttpStatus.OK);
+		
 	}
 
+	
+//	-------------------------------------------------updatePlanerHandler---------------------------------------------------------------------
+	
 	@PutMapping("/planters/admin_userName}")
-	ResponseEntity<Planter> UpdatePlanterHandler(@RequestBody Planter planter, @PathVariable String admin_userName)
+	ResponseEntity<Planter> updatePlanterHandler(@RequestBody Planter planter, @PathVariable String admin_userName)
 			throws PlanterException, CustomerException, AdminException {
+		
 		Planter updatePlanter = planterService.updatePlanter(planter, admin_userName);
 		return new ResponseEntity<Planter>(updatePlanter, HttpStatus.OK);
+		
 	}
 
+	
+//	-------------------------------------------------viewPlanterByShaperHandler---------------------------------------------------------------------
+	
 	@GetMapping("/plnatershape/{userName}/{shape}")
 	public ResponseEntity<Planter> viewPlanterByShape(@Valid @PathVariable("shape") String planterShape,
 			@PathVariable("user") String userName) throws PlanterException, AdminException, CustomerException {
 
 		Planter planter = planterService.viewPlanter(planterShape, userName);
-
 		return new ResponseEntity<Planter>(planter, HttpStatus.OK);
+		
 	}
 
+	
+//	-------------------------------------------------deletePlanterHandler---------------------------------------------------------------------
+	
 	@DeleteMapping("/planters/{admin_userName}/{planterId}")
 	public ResponseEntity<Planter> deletePlanterHandler(@PathVariable Integer planterId, @PathVariable String admin_userName)
 			throws PlanterException, CustomerException, AdminException {
+		
 		Planter Planterdeleted = planterService.deletePlanter(planterId, admin_userName);
 		return new ResponseEntity<Planter>(Planterdeleted, HttpStatus.OK);
+		
 	}
+	
+	
+//	-------------------------------------------------viewAllPlantersHandler---------------------------------------------------------------------
 
 	@GetMapping("/planters/{userName}")
 	public ResponseEntity<List<Planter>> findAllPlanters(@PathVariable String userName)
 			throws PlanterException, AdminException, CustomerException {
 
 		List<Planter> planterList = planterService.viewAllPlanters(userName);
-
 		return new ResponseEntity<List<Planter>>(planterList, HttpStatus.OK);
+		
 	}
 
+	
+//	-------------------------------------------------viewAllPlantersInRange Hanlder---------------------------------------------------------------------
+	
 	@GetMapping("/planters/{userName}/{minCost}/{maxCost}")
 	public ResponseEntity<List<Planter>> viewPlantersByCostRange(@Valid @PathVariable("minCost") Integer minCost,
 			@PathVariable("maxCost") Integer maxCost, @PathVariable("userName") String userName)
 			throws PlanterException, AdminException, CustomerException {
 
 		List<Planter> planterList = planterService.viewAllPlanters(minCost, maxCost, userName);
-
 		return new ResponseEntity<List<Planter>>(planterList, HttpStatus.OK);
+		
 	}
+	
+	
+//	-------------------------------------------------registerPlanter with seed, plant handler---------------------------------------------------------------------
 
 	@PostMapping("/plnatersassociate/{admin_userName}")
 	public ResponseEntity<Planter> regiserPlanterWithSeedAndPlantHandler(@RequestParam Integer planter,
-			@RequestParam Integer plantId, @RequestParam Integer seedId, @PathVariable("admin_userName") String admin_userName)
+			@RequestParam Integer plantId, @RequestParam Integer seedId, 
+			@PathVariable String admin_userName)
 			throws PlanterException, AdminException {
+		
 		return new ResponseEntity<>(planterService.registerPlanter(planter, plantId, seedId, admin_userName), HttpStatus.CREATED);
+	
 	}
 
+	
+//	-------------------------------------------------register empty planter object into DB---------------------------------------------------------------------
+	
 	@PostMapping("/planters/{admin_userName}")
 	public ResponseEntity<Planter> registerPlanterHandler(@RequestBody Planter planter, @PathVariable String admin_userName)
 			throws PlanterException, AdminException {
-		return new ResponseEntity<>(planterService.addPlanter(planter, admin_userName), HttpStatus.CREATED);
+		
+		return new ResponseEntity<Planter>(planterService.addPlanter(planter, admin_userName), HttpStatus.CREATED);
+	
 	}
 
 }

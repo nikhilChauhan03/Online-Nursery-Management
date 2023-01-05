@@ -1,7 +1,4 @@
 package com.masai.controller;
-
-
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +27,7 @@ public class CustomerController {
 	@Autowired
 	CustomerService customerService;
 	
+//	-------------------------------------------------registerCustomerHandler------------------------------------------------------------------
 	
 	@PostMapping("/customers")
 	public ResponseEntity<Customer> createCustomerHandler(@Valid @RequestBody Customer cos) throws CustomerException
@@ -38,11 +36,17 @@ public class CustomerController {
 		return new ResponseEntity<Customer>(customer,HttpStatus.CREATED);
 	}
 	
+	
+//	-------------------------------------------------LogInCustomerHandler------------------------------------------------------------------
+	
 	@PostMapping("/customerslogin")
 	public ResponseEntity<String> loginCustomerHandler(@Valid @RequestBody LoginDTO login) throws CustomerException
 	{
 		return new ResponseEntity<String>(customerService.validateCustomer(login),HttpStatus.ACCEPTED);
 	}
+	
+	
+//	-------------------------------------------------DeleteCustomerHandler------------------------------------------------------------------
 	
 	@DeleteMapping("/customerslogout/{customer_userName}")
 	public ResponseEntity<LogoutDTO> logOutCustomerHandler(@PathVariable String customer_userName) throws CustomerException
@@ -50,16 +54,24 @@ public class CustomerController {
 		return new ResponseEntity<LogoutDTO>(customerService.logOutCustomer(customer_userName),HttpStatus.ACCEPTED);
 	}
 	
+	
+//	-------------------------------------------------updateCustomerHandler------------------------------------------------------------------
+	
 	@PutMapping("/customers")
 	public ResponseEntity<Customer> updateCustomerHandler(@Valid @RequestBody Customer customer) throws CustomerException
 	{
 		return new ResponseEntity<Customer>(customerService.updateCustomer(customer),HttpStatus.OK);
 	}
 	
+	
+//	-------------------------------------------------LogOutCustomerHandler------------------------------------------------------------------
+	
 	@DeleteMapping("/customers/{customre_userId}")
 	public ResponseEntity<LogoutDTO> logOutCustomerHandler(@PathVariable Integer customre_userId) throws CustomerException
 	{
 		return new ResponseEntity<LogoutDTO>(customerService.deleteCustomer(customre_userId),HttpStatus.ACCEPTED);
 	}
+	
+	
 	
 }

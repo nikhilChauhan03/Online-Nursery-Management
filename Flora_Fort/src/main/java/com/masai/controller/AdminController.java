@@ -30,11 +30,16 @@ public class AdminController {
 	@Autowired
 	AdminService adminService;
 	
+//		-------------------------------------------------registerAdminHandler------------------------------------------------------------------
+	
 	@PostMapping("/admins")
 	public ResponseEntity<Admin> registerAdminHandler(@Valid @RequestBody Admin admin) throws AdminException
 	{
 		return new ResponseEntity<Admin>(adminService.registerAsAdmin(admin),HttpStatus.CREATED);
 	}
+	
+	
+//	-------------------------------------------------loginAsAdminHandler------------------------------------------------------------------
 	
 	@PostMapping("/adminslogin")
 	public ResponseEntity<String> loginAdminHandler(@Valid @RequestBody LoginDTO login) throws AdminException
@@ -42,11 +47,17 @@ public class AdminController {
 		return new ResponseEntity<String>(adminService.login(login),HttpStatus.ACCEPTED);
 	}
 	
+	
+//	-------------------------------------------------updateAdminHandler------------------------------------------------------------------
+	
 	@PutMapping("/admins")
 	public ResponseEntity<Admin> updateAdminHandler(@Valid @RequestBody Admin admin) throws AdminException
 	{
 		return new ResponseEntity<Admin>(adminService.updateAdmin(admin),HttpStatus.ACCEPTED);
 	}
+	
+	
+//	-------------------------------------------------deleteAdminHandler------------------------------------------------------------------
 	
 	@DeleteMapping("/admins/{adminId}")
 	public ResponseEntity<LogoutDTO> deleteAdminHandler(@PathVariable Integer adminId) throws AdminException
@@ -54,17 +65,26 @@ public class AdminController {
 		return new ResponseEntity<LogoutDTO>(adminService.deleteAdmin(adminId),HttpStatus.ACCEPTED);
 	}
 	
+	
+//	-------------------------------------------------viewAllCustomersHandler------------------------------------------------------------------
+	
 	@GetMapping("/admins/{admin_username}")
 	public ResponseEntity<List<Customer>> viewAllCustomersHandler(@PathVariable String admin_username) throws AdminException, CustomerException
 	{
 		return new ResponseEntity<List<Customer>>(adminService.viewAllCustomers(admin_username),HttpStatus.ACCEPTED);
 	}
 	
+	
+//	-------------------------------------------------LogOutHandler------------------------------------------------------------------
+	
 	@DeleteMapping("/adminslogout/{admin_username}")
 	public ResponseEntity<LogoutDTO> logOutAdminHandler(@PathVariable String admin_username) throws AdminException
 	{
 		return new ResponseEntity<LogoutDTO>(adminService.logOutAdmin(admin_username),HttpStatus.ACCEPTED);
 	}
+	
+	
+//	-------------------------------------------------viewCustomerByIdHandler------------------------------------------------------------------
 	
 	@GetMapping("/getcustomer/{customerId}/{admin_username}")
 	public ResponseEntity<Customer> getCustomerByIdHandler(@PathVariable Integer customerId, @PathVariable String admin_username) throws AdminException, CustomerException

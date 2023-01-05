@@ -29,7 +29,6 @@ public class SeedController {
 	    public ResponseEntity<Seed> addSeedHandler(@RequestBody Seed seed, @PathVariable String admin_userName) throws SeedException, AdminException{
 	        
 	        Seed seeds = sService.addSeed(seed, admin_userName);
-	        
 	        return new ResponseEntity<Seed>(seeds, HttpStatus.CREATED);
 	        
 	    }
@@ -37,17 +36,15 @@ public class SeedController {
 	    @PutMapping("/seeds/{admin_userName}")
 	    public ResponseEntity<Seed> updateSeedHandler(@RequestBody Seed seed, @PathVariable String admin_userName) throws SeedException, AdminException{
 	        
-	        Seed seeds = sService.updateSeed(seed, admin_userName);
-	        
+	        Seed seeds = sService.updateSeed(seed, admin_userName);   
 	        return new ResponseEntity<Seed>(seeds, HttpStatus.ACCEPTED);
-	        
+	      
 	    }
 	    
 	    @DeleteMapping("/seeds/{admin_userName}/{id}")
 	    public ResponseEntity<Seed> deleteSeedHandler(@PathVariable("id") Integer seedId, @PathVariable String admin_userName) throws SeedException, AdminException{
 	        
 	        Seed seeds = sService.deleteSeed(seedId, admin_userName);
-	        
 	        return new ResponseEntity<Seed>(seeds, HttpStatus.OK);
 	        
 	    }
@@ -56,7 +53,6 @@ public class SeedController {
 	    public ResponseEntity<Seed> viewSeedHandler(@PathVariable Integer seedId, @PathVariable String user) throws SeedException,AdminException,CustomerException{
 	    
 	        Seed seeds = sService.viewSeed(seedId,user);
-	        
 	        return new ResponseEntity<Seed>(seeds, HttpStatus.OK);
 	        
 	    }
@@ -65,25 +61,28 @@ public class SeedController {
 	    public ResponseEntity<List<Seed>> viewSeedHandler2(@PathVariable String seed_commonName,@PathVariable String userName) throws SeedException, AdminException,CustomerException{
 	        
 	        List<Seed> seeds = sService.viewSeed(seed_commonName,userName);
-	        
 	        return new ResponseEntity<List<Seed>>(seeds, HttpStatus.OK);
 	        
 	    }
+	    
+	    
+	    
 	    
 	    @GetMapping("/seeds/{userName}")
 	    public ResponseEntity<List<Seed>> viewAllSeedHandler(@PathVariable String userName) throws SeedException, AdminException,CustomerException{
 	        
 	        List<Seed> seeds = sService.viewAllSeeds(userName);
-	        
 	        return new ResponseEntity<List<Seed>>(seeds, HttpStatus.OK);
 	        
 	    }
+	    
+	    
+	    
 	    
 	    @GetMapping("/seedstype/{userName}/{seed_type}")
 	    public ResponseEntity<List<Seed>> viewAllSeedByTypeHandler(@PathVariable String seed_type,@PathVariable String userName) throws SeedException, AdminException,CustomerException{
 	        
 	        List<Seed> seeds = sService.viewAllSeeds(seed_type,userName);
-	        
 	        return new ResponseEntity<List<Seed>>(seeds, HttpStatus.OK);
 	        
 	    }

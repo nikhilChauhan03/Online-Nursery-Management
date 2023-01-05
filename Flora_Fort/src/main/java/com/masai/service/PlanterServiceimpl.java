@@ -47,7 +47,7 @@ public class PlanterServiceimpl  implements PlanterService{
 	    private CustomerService customerService;
 	    
 	    
-//	    registering planter into the database. we need to provide the planter object by request body :----------------
+//	    -----------------registering planter into the database. we need to provide the planter object by request body :----------------
 	    
 	    @Override
 	    public Planter addPlanter(Planter planter,String user) throws AdminException {
@@ -61,7 +61,7 @@ public class PlanterServiceimpl  implements PlanterService{
 	    }
 	    
 	    
-//	    updating the planter by planter object from request body : ----------------------------------------------------------
+//	    ----------------updating the planter by planter object from request body : ----------------------------------------------------------
 	    
 	    @Override
 	    public Planter updatePlanter(Planter planter,String user) throws PlanterException,AdminException {
@@ -81,7 +81,7 @@ public class PlanterServiceimpl  implements PlanterService{
 	    }
 	    
 	    
-//	    deleting the planter by providing the plant id from request params :---------------------------------------------------
+//	    ------------deleting the planter by providing the plant id from request params :---------------------------------------------------
 	    
 	    @Override
 	    public Planter deletePlanter(Integer planterId,String user) throws PlanterException,AdminException   {

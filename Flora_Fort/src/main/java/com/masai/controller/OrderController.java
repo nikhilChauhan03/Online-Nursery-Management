@@ -1,5 +1,5 @@
-package com.masai.controller;
 
+package com.masai.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.exception.AdminException;
@@ -22,20 +23,29 @@ import com.masai.service.OrderService;
 
 @RestController
 public class OrderController {
+	
 	@Autowired
 	OrderService orderservice;
 
-	@PostMapping("/orders/{customer_userName}/{planterId}/{customerId}")
-	ResponseEntity<Orders> creatorderhandler(@PathVariable Integer customerId, @PathVariable String customer_userName,@PathVariable Integer planterId, @RequestBody Orders order) throws OrderException, CustomerException {
+
+	@PostMapping("/orders/{planterId}/{customerId}")
+	public ResponseEntity<Orders> createOrderhandler(@PathVariable Integer customerId, @RequestParam String customer_userName,@PathVariable Integer planterId, @RequestBody Orders order) 
+			throws OrderException, CustomerException {
 		
 		Orders neworder = orderservice.addOrder(order,planterId,customerId,customer_userName);
-		return new ResponseEntity<>(neworder, HttpStatus.CREATED);
+		return new ResponseEntity<Orders>(neworder, HttpStatus.CREATED);
 
 	}
-
 	
+//	@PostMapping("/orders/{customer_userName}/{planterId}/{customerId}")
+//	public ResponseEntity<Orders> createOrderHandler(@RequestBody Orders orders, @RequestParam String customer_userName, @PathVariable Integer planterId, @PathVariable Integer customerId) throws OrderException, CustomerException
+//	{
+//	
+//		return new ResponseEntity<Orders>(orderservice.addOrder(orders, planterId,customerId,customer_userName),HttpStatus.CREATED);
+//	}
+
 	@PutMapping("/orders/{customer_userName}")
-	ResponseEntity<Orders> UpdateOrderHandler(@RequestBody Orders order,@PathVariable String customer_userName) throws OrderException, CustomerException {
+	public ResponseEntity<Orders> UpdateOrderHandler(@RequestBody Orders order,@PathVariable String customer_userName) throws OrderException, CustomerException {
 		
 		Orders updateorder = orderservice.updateOrder(order,customer_userName);
 		return new ResponseEntity<Orders>(updateorder, HttpStatus.OK);
@@ -44,7 +54,7 @@ public class OrderController {
 
 	
 	@DeleteMapping("/orders/{customer_userName}/{BookingOrderId}")
-	ResponseEntity<Orders> deleteOrderHandler(@PathVariable("BookingOrderId") Integer BookingOrderId,@PathVariable String customer_userName)
+	public ResponseEntity<Orders> deleteOrderHandler(@PathVariable("BookingOrderId") Integer BookingOrderId,@PathVariable String customer_userName)
 			throws OrderException, CustomerException {
 		
 		Orders orderdeleted = orderservice.deleteOrder(BookingOrderId,customer_userName);
@@ -52,7 +62,6 @@ public class OrderController {
 	
 	}
 
-	
 	@GetMapping("/orders/{customer_userName}/{BookingOrderId}")
 	ResponseEntity<Orders> viewOrderHandler(@PathVariable("BookingOrderId") Integer BookingOrderId,@PathVariable String customer_userName)
 			throws OrderException, CustomerException, AdminException {
@@ -64,7 +73,7 @@ public class OrderController {
 
 	
 	@GetMapping("/orders/{customer_userName}")
-	ResponseEntity<List <Orders>> viewAllOrderHandler(@PathVariable String customer_userName)throws OrderException, CustomerException, AdminException{
+	public ResponseEntity<List <Orders>> viewAllOrderHandler(@PathVariable String customer_userName)throws OrderException, CustomerException, AdminException{
 		
 		List<Orders> Allorders= orderservice.viewAllOrder(customer_userName);
 		return new ResponseEntity<List <Orders>>(Allorders, HttpStatus.OK);
