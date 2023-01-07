@@ -28,6 +28,8 @@ public class OrderController {
 	OrderService orderservice;
 
 
+//	-----------------------------------------------------------createOrderHandler----------------------------------------------------------------------------------------------------------------------------------------------------------
+	
 	@PostMapping("/orders/{planterId}/{customerId}")
 	public ResponseEntity<Orders> createOrderhandler(@PathVariable Integer customerId, @RequestParam String customer_userName,@PathVariable Integer planterId, @RequestBody Orders order) 
 			throws OrderException, CustomerException {
@@ -36,13 +38,9 @@ public class OrderController {
 		return new ResponseEntity<Orders>(neworder, HttpStatus.CREATED);
 
 	}
+
 	
-//	@PostMapping("/orders/{customer_userName}/{planterId}/{customerId}")
-//	public ResponseEntity<Orders> createOrderHandler(@RequestBody Orders orders, @RequestParam String customer_userName, @PathVariable Integer planterId, @PathVariable Integer customerId) throws OrderException, CustomerException
-//	{
-//	
-//		return new ResponseEntity<Orders>(orderservice.addOrder(orders, planterId,customerId,customer_userName),HttpStatus.CREATED);
-//	}
+//	----------------------------------------------------------updateOrderHandler------------------------------------------------------------------------------------------------------
 
 	@PutMapping("/orders/{customer_userName}")
 	public ResponseEntity<Orders> UpdateOrderHandler(@RequestBody Orders order,@PathVariable String customer_userName) throws OrderException, CustomerException {
@@ -53,6 +51,8 @@ public class OrderController {
 	}
 
 	
+//	--------------------------------------------------------------deleteOrderByOrderHandler---------------------------------------------------------------------------------------------
+	
 	@DeleteMapping("/orders/{customer_userName}/{BookingOrderId}")
 	public ResponseEntity<Orders> deleteOrderHandler(@PathVariable("BookingOrderId") Integer BookingOrderId,@PathVariable String customer_userName)
 			throws OrderException, CustomerException {
@@ -62,6 +62,8 @@ public class OrderController {
 	
 	}
 
+//	----------------------------------------------view Perticular Order by orderId---------------------------------------------------------------------------------
+	
 	@GetMapping("/orders/{customer_userName}/{BookingOrderId}")
 	ResponseEntity<Orders> viewOrderHandler(@PathVariable("BookingOrderId") Integer BookingOrderId,@PathVariable String customer_userName)
 			throws OrderException, CustomerException, AdminException {
@@ -72,8 +74,11 @@ public class OrderController {
 	}
 
 	
+//	---------------------------------------------------------viewAllOrdersByHandler---------------------------------------------------------
+	
 	@GetMapping("/orders/{customer_userName}")
-	public ResponseEntity<List <Orders>> viewAllOrderHandler(@PathVariable String customer_userName)throws OrderException, CustomerException, AdminException{
+	public ResponseEntity<List <Orders>> viewAllOrderHandler(@PathVariable String customer_userName)
+			throws OrderException, CustomerException, AdminException{
 		
 		List<Orders> Allorders= orderservice.viewAllOrder(customer_userName);
 		return new ResponseEntity<List <Orders>>(Allorders, HttpStatus.OK);
